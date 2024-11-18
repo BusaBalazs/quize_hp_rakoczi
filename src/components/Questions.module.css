@@ -1,0 +1,123 @@
+.container {
+  width: 100vw;
+  height: 100vmax;
+  text-align: center;
+  padding: 1em;
+  overflow: hidden;
+}
+
+/* backgrounds */
+/***********************************/
+
+.bg-1 {
+  background: no-repeat url("../assets/blur_bg_1.jpg");
+  background-size: cover;
+  background-position: -110px;
+}
+
+.bg-2 {
+  background: no-repeat url("../assets/blur_bg_2.jpg");
+  background-size: cover;
+  background-position: center;
+}
+
+@media screen and (orientation: landscape) {
+  .landscape-bg {
+    background-position: center;
+  }
+}
+/***********************************/
+
+.question-container {
+  margin-bottom: 1.5em;
+}
+
+.question {
+  width: min(100%, 650px);
+  padding: 0.3em;
+  background-color: var(--color-black-bg);
+  margin: auto;
+  color: var(--color-orage-100);
+  border: solid 1px var(--color-orage-100);
+}
+
+.question h2,
+.list li button {
+  font-size: var(--font-size-l);
+}
+
+.nimbus-img {
+  width: 55%;
+  position: relative;
+  top: 20px;
+  left: 85px;
+  transform: rotateZ(-5deg);
+}
+
+.list {
+  width: min(100%, 650px);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: 2.5em auto;
+  gap: 1em;
+}
+
+.list li {
+  width: 100%;
+}
+
+.list li button {
+  width: 100%;
+  padding: 0.3em 0;
+  letter-spacing: 0.09em;
+  color: var(--color-white);
+  background-color: var(--color-black-bg);
+  border: solid 1px var(--color-orage-100);
+  border-radius: var(--border-radius-xl);
+}
+
+.timer-container {
+  width: 100%;
+  margin-top: 4em;
+  border-top:  solid 1px var(--color-orage-200);
+  position: relative;
+}
+
+.timer-container::after {
+  content: "";
+  position: absolute;
+  top: -10px;
+  left: calc(50% - 10px);
+  display: block;
+  width: 20px;
+  height: 20px;
+  background-color: var(--color-orage-100);
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.15) inset;
+  transform: rotate(45deg);
+  z-index: 5;
+}
+
+.timer-display {
+  width: min(50%, 200px);
+  margin: auto;
+  padding: .65em 1em;
+  background-color: var(--color-alpha-orage-100);
+  border: solid 1px var(--color-orage-200);
+}
+
+
+
+/*test */
+/***********************************/
+
+.test {
+  margin-top: 2rem;
+  color: white;
+}
+
+.test button {
+  padding: .2em 2em;
+}
+/***********************************/

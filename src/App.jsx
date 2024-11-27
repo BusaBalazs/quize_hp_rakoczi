@@ -8,11 +8,9 @@ import { useCtx } from "./context/context";
 //-----------------------------------------------------------
 import classes from "./App.module.css";
 
-import imgWand from "./assets/FF23FF99.png";
-import imgFlagBrown from "./assets/Houses_flag_brown.png";
-import imgFlagBlue from "./assets/Houses_flag_blue.png";
-import imgFlagRed from "./assets/Houses_flag_red.png";
-import imgFlagGreen from "./assets/Houses_flag_green.png";
+import { imgWand, imgFlagBlue, imgFlagBrown, imgFlagGreen, imgFlagRed } from "./assets/index.js";
+
+
 //-----------------------------------------------------------
 //-----------------------------------------------------------
 

@@ -11,7 +11,7 @@ import Timer from "./Timer";
 import classes from "./Questions.module.css";
 //-----------------------------------------------------------------
 
-import { ANSWER_FEEDBACK, QR_READER_FEEDBACK } from "../lib/constants";
+
 import { question } from "../lib/testData";
 import nimbusImg from "../assets/nimbusz_2000.png";
 
@@ -35,8 +35,6 @@ const Questions = () => {
   const dialog = useRef();
 
   const [answerIsTrue, setAnswerIsTrue] = useState(true);
-
-  const [modalText, setModalText] = useState(ANSWER_FEEDBACK);
 
   const btns = useRef([]);
 
@@ -65,7 +63,6 @@ const Questions = () => {
     if (answer) {
       dialog.current.open();
       setAnswerIsTrue(true);
-      setModalText(ANSWER_FEEDBACK);
     } else {
       setAnswerIsTrue(false);
       //setBtn(e.target);
@@ -93,7 +90,6 @@ const Questions = () => {
       setValue({ ...storedValue, questionCounter: testCounter });
     } else {
       dialog.current.open();
-      setModalText(QR_READER_FEEDBACK);
     }
   };
 
@@ -111,7 +107,6 @@ const Questions = () => {
       <Modal
         ref={dialog}
         onCancel={handlCancel}
-        answer={modalText}
         getScanId={handleGetScanId}
       />
       {question[storedValue.questionCounter] && (

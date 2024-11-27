@@ -78,10 +78,13 @@
   border-radius: var(--border-radius-xl);
 }
 
+/* timer */
+/***********************************/
+
 .timer-container {
   width: 100%;
   margin-top: 4em;
-  border-top:  solid 1px var(--color-orage-200);
+  border-top: solid 1px var(--color-orage-200);
   position: relative;
 }
 
@@ -102,12 +105,10 @@
 .timer-display {
   width: min(50%, 200px);
   margin: auto;
-  padding: .65em 1em;
+  padding: 0.65em 1em;
   background-color: var(--color-alpha-orage-100);
   border: solid 1px var(--color-orage-200);
 }
-
-
 
 /*test */
 /***********************************/
@@ -118,6 +119,6 @@
 }
 
 .test button {
-  padding: .2em 2em;
+  padding: 0.2em 2em;
 }
 /***********************************/

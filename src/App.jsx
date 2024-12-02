@@ -1,3 +1,4 @@
+import { useState } from "react";
 
 import Questions from "./components/Questions";
 
@@ -8,7 +9,13 @@ import { useCtx } from "./context/context";
 //-----------------------------------------------------------
 import classes from "./App.module.css";
 
-import { imgWand, imgFlagBlue, imgFlagBrown, imgFlagGreen, imgFlagRed } from "./assets/index.js";
+import {
+  imgWand,
+  imgFlagBlue,
+  imgFlagBrown,
+  imgFlagGreen,
+  imgFlagRed,
+} from "./assets/index.js";
 
 
 //-----------------------------------------------------------
@@ -16,7 +23,8 @@ import { imgWand, imgFlagBlue, imgFlagBrown, imgFlagGreen, imgFlagRed } from "./
 
 const App = () => {
   //from context.jsx
-  const { isStart, startGame } = useCtx();
+  const { isStart, startGame, isEnd } = useCtx();
+  const [questionNum, setQuestionNum] = useState(0)
   //-----------------------------------------------------------
 
   //invoke the startGame function in context.jsx
@@ -24,15 +32,24 @@ const App = () => {
     startGame();
   };
 
+  const getTurnNum = (num) => {
+    setQuestionNum(num);
+  };
 
   //-----------------------------------------------------------
   return (
     <>
       {isStart ? (
-        <>
-          <Questions />
-         
-        </>
+        <section
+          className={`${classes["container"]} ${
+            classes[`bg-${questionNum + 1}`]
+          } ${classes["landscape-bg"]}`}
+        >
+          <Questions gameTurn={getTurnNum} />
+          <div className={classes["timer-container"]}>
+            <Timer className={classes["timer-display"]} isEnd={isEnd} />
+          </div>
+        </section>
       ) : (
         <section className={classes["start-page"]}>
           <div className={classes["btn-container"]}>

@@ -9,9 +9,8 @@ const displayTime = (unit) => {
 
 //-----------------------------------------------------------
 //-----------------------------------------------------------
-const Timer = ({ isStart, ...props }) => {
-  const { getFinalTime, isEnd } = useCtx();
-  
+const Timer = ({ isEnd, ...props }) => {
+  const { getFinalTime, isStart } = useCtx();
 
   const [elapsedTime, setElapsedTime] = useState({
     sec: 0,
@@ -36,8 +35,8 @@ const Timer = ({ isStart, ...props }) => {
           getTime.hour++;
           getTime.min = 0;
         }
-        
-       window.localStorage.setItem(
+
+        window.localStorage.setItem(
           "status",
           JSON.stringify({ ...getStatus, time: getTime })
         );
@@ -47,6 +46,7 @@ const Timer = ({ isStart, ...props }) => {
       //-----------------------------------------------------
       //get the final time throughout the context.jsx when the last qr code was written
       //and stop the timer
+
       if (isEnd) {
         getFinalTime(
           `${displayTime(elapsedTime.hour)}:${displayTime(

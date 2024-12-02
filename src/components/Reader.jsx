@@ -7,7 +7,7 @@ const CONFIG = {
   qrbox: { width: 500, height: 800 },
   fps: 5,
   videoConstraints: {
-    facingMode: "environment",
+    facingMode: { exact: "environment" },
   },
   rememberLastUsedCamera: true,
   supportedScanTypes: [Html5QrcodeScanType.SCAN_TYPE_CAMERA],
@@ -17,7 +17,6 @@ const CONFIG = {
 //----------------------------------------------------------------------
 
 const Reader = ({ scanId }) => {
-
   useEffect(() => {
     const scanner = new Html5QrcodeScanner("reader", CONFIG);
 

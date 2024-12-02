@@ -1,5 +1,5 @@
 import { createContext, useContext, useState, useEffect } from "react";
-import { useLocalStorage } from "../hook/useLocalStorage";
+
 //-------------------------------------------------------------
 const Ctx = createContext();
 
@@ -7,17 +7,6 @@ const Ctx = createContext();
 export function useCtx() {
   return useContext(Ctx);
 }
-//-------------------------------------------------------------
-
-const initialSoredValue = {
-  isStart: "true",
-  questionCounter: 0,
-  time: {
-    sec: 0,
-    min: 0,
-    hour: 0,
-  },
-};
 
 //-------------------------------------------------------------
 //-------------------------------------------------------------
@@ -25,13 +14,14 @@ export function CtxProvider(props) {
   const [isStart, setIsStart] = useState();
   const [isEnd, setIsEnd] = useState(false);
   const [finalTime, setFinalTime] = useState();
-  const [storedValue, setValue] = useLocalStorage("status", null);
+ 
 
   //-------------------------------------------------------------
 
-  //if local storage is empty the game has not begun
+  //if local storage is empty the game has not begun yet
   useEffect(() => {
-    !storedValue ? setIsStart(false) : setIsStart(true);
+    const gameStatus = localStorage.getItem("status");
+    !gameStatus ? setIsStart(false) : setIsStart(true);
   }, []);
 
   //-------------------------------------------------------------
@@ -39,8 +29,18 @@ export function CtxProvider(props) {
   //set the initial local storage when click the Start button
   const startGame = () => {
     setIsStart(true);
-
-    setValue(initialSoredValue);
+    localStorage.setItem(
+      "status",
+      JSON.stringify({
+        isStart: "true",
+        questionCounter: 0,
+        time: {
+          sec: 0,
+          min: 0,
+          hour: 0,
+        },
+      })
+    );
   };
 
   //-------------------------------------------------------------

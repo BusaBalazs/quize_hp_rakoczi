@@ -52,6 +52,8 @@ const Modal = forwardRef(({ onCancel, getScanId }, ref) => {
       return;
     dialog.current.close();
   }; */
+
+ 
   //-----------------------------------------------------------------
   return (
     <dialog
@@ -89,8 +91,8 @@ const Modal = forwardRef(({ onCancel, getScanId }, ref) => {
         )}
         {isEnd && (
           <>
-            <button onClick={handleRestart}>Restart</button>
             <p>Szuper vagy!</p>
+            <button onClick={handleRestart} className={classes["restart-btn"]}>Restart</button>
             {finalTime && <p>{`Az időd: ${finalTime}`}</p>}
           </>
         )}

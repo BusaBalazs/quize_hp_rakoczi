@@ -65,3 +65,50 @@ body {
     inset 0 0 50px rgba(107, 69, 51, 0.6);
   font-family: var(--font-regular);
 }
+
+#reader button {
+  padding: 0.6em 1em;
+  margin: 2em 0 1em 0;
+  border-radius: var(--border-radius-xl);
+  text-transform: uppercase;
+  background-color: var(--color-orage-100);
+  border: 1px solid var(--color-orage-200);
+  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+}
+
+#reader__header_message {
+  font-size: 1rem !important;
+  padding: 1em !important;
+  color: black !important;
+  border: none !important;
+  border-radius: var(--border-radius-s) !important;
+  background-color: rgb(255, 84, 84) !important;
+}
+
+#reader {
+  border: none !important;
+}
+
+#reader img[alt="Info icon"] {
+  display: none;
+}
+
+#reader__dashboard_section_csr :nth-child(2) {
+  display: none;
+}
+
+#reader__dashboard_section_csr button {
+  visibility: hidden;
+}
+
+#reader__dashboard_section_csr button::after {
+  content: "Kamera Engedélyezése";
+  visibility: visible;
+  display: block;
+  padding: 0.6em 1em;
+  border-radius: var(--border-radius-xl);
+  text-transform: uppercase;
+  background-color: var(--color-orage-100);
+  border: 1px solid var(--color-orage-200);
+  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+}

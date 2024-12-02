@@ -44,7 +44,6 @@
 
 .map-img-container {
   position: relative;
-  
 }
 
 .map-img-container::after,
@@ -74,7 +73,7 @@
   margin-top: -0.5rem;
 }
 
-.scan-btn {
+.scan-btn, .restart-btn {
   padding: 0.6em 1.8em;
   margin: 2.5em 0 0 0;
   border-radius: var(--border-radius-xl);

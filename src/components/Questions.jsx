@@ -1,16 +1,15 @@
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useEffect } from "react";
 
 import { useCtx } from "../context/context";
-import { useLocalStorage } from "../hook/useLocalStorage";
+
 //-----------------------------------------------------------------
 
 import QuestionItem from "./QuestionItem";
 import Modal from "./Modal";
-import Timer from "./Timer";
+
 //-----------------------------------------------------------------
 import classes from "./Questions.module.css";
 //-----------------------------------------------------------------
-
 
 import { question } from "../lib/testData";
 import nimbusImg from "../assets/nimbusz_2000.png";
@@ -29,19 +28,27 @@ const shuffleArray = (array) => {
 question.map((item) => shuffleArray(item.answers));
 
 //-----------------------------------------------------------------
+// local storage functions
+
+const getLocaldata = (key) => {
+  return JSON.parse(localStorage.getItem(key));
+};
+
+const setLocalData = (key, value) => {
+  localStorage.setItem(key, JSON.stringify(value));
+};
+//-----------------------------------------------------------------
 //-----------------------------------------------------------------
 
-const Questions = () => {
+const Questions = ({ gameTurn }) => {
   const dialog = useRef();
 
   const [answerIsTrue, setAnswerIsTrue] = useState(true);
+  const [questionNum, setQuestionNum] = useState();
 
   const btns = useRef([]);
 
-  const { onTurn, isStart, startGame } = useCtx();
-
-  // custom hook for handling local storage
-  const [storedValue, setValue] = useLocalStorage("status");
+  const { onTurn } = useCtx();
 
   //---------------------------------------------------------------
 
@@ -49,14 +56,18 @@ const Questions = () => {
 
   //--------------------------------------------------------------
 
-  //listen every game turn to the last question and invoke the onTurn function in context.jsx
+  // when the page loded or reloaded this useEffect set the actual question number, if the game just has begun set the first question
+  useEffect(() => {
+    const getStatus = getLocaldata("status");
+    const getCounter = getStatus.questionCounter;
+    if (getCounter === 0) {
+      setQuestionNum(0);
+    } else {
+      setQuestionNum(getCounter);
+    }
+  }, []);
 
-  if (storedValue.questionCounter === question.length) {
-    dialog.current.open();
-    onTurn();
-  }
-
-  //---------------------------------------------------------------
+  //--------------------------------------------------------------
 
   // check the selected answer and add feedback if it is wrong
   const isOk = (e, index, answer) => {
@@ -84,10 +95,21 @@ const Questions = () => {
   // check the QR code, and set the next question if the code is right
   const handleGetScanId = (result) => {
     dialog.current.close();
-    if (result === questionId[storedValue.questionCounter]) {
-      let testCounter = storedValue.questionCounter;
-      testCounter++;
-      setValue({ ...storedValue, questionCounter: testCounter });
+    if (result === questionId[questionNum]) {
+      const getStatus = getLocaldata("status");
+      let getCounter = getStatus.questionCounter;
+      getCounter++;
+
+      setLocalData("status", { ...getStatus, questionCounter: getCounter });
+
+      //listen every game turn to the last question and invoke the onTurn function in context.jsx
+      if (getCounter === question.length) {
+        dialog.current.open();
+        onTurn();
+        setQuestionNum(getCounter - 1);
+        return;
+      }
+      setQuestionNum(getCounter);
     } else {
       dialog.current.open();
     }
@@ -96,25 +118,30 @@ const Questions = () => {
   //--------------------------------------------------------------
 
   const handleTest = () => {
-    let testCounter = storedValue.questionCounter;
-    testCounter++;
-    setValue({ ...storedValue, questionCounter: testCounter });
+    const getStatus = getLocaldata("status");
+    let getCounter = getStatus.questionCounter;
+    getCounter++;
+
+    setLocalData("status", { ...getStatus, questionCounter: getCounter });
+
+    //listen every game turn to the last question and invoke the onTurn function in context.jsx
+    if (getCounter === question.length) {
+      dialog.current.open();
+      onTurn();
+      setQuestionNum(getCounter - 1);
+      return;
+    }
+    setQuestionNum(getCounter);
   };
 
+  // forward the number of question to App.jsx for set the background
+  gameTurn(questionNum);
   //--------------------------------------------------------------
   return (
     <>
-      <Modal
-        ref={dialog}
-        onCancel={handlCancel}
-        getScanId={handleGetScanId}
-      />
-      {question[storedValue.questionCounter] && (
-        <section
-          className={`${classes["container"]} ${
-            classes[`bg-${storedValue.questionCounter + 1}`]
-          } ${classes["landscape-bg"]}`}
-        >
+      <Modal ref={dialog} onCancel={handlCancel} getScanId={handleGetScanId} />
+      {question[questionNum] && (
+        <section>
           <div className={classes["question-container"]}>
             <img
               src={nimbusImg}
@@ -122,12 +149,12 @@ const Questions = () => {
               className={classes["nimbus-img"]}
             />
             <div className={classes["question"]}>
-              <h2>{question[storedValue.questionCounter].question}</h2>
-              <code>{question[storedValue.questionCounter].operation}</code>
+              <h2>{question[questionNum].question}</h2>
+              <code>{question[questionNum].operation}</code>
             </div>
           </div>
           <ul className={classes.list}>
-            {question[storedValue.questionCounter].answers.map((item, i) => (
+            {question[questionNum].answers.map((item, i) => (
               <QuestionItem
                 key={item.answer}
                 CheckAnswer={(e, index = i) => isOk(e, index, item.right)}
@@ -138,12 +165,10 @@ const Questions = () => {
               </QuestionItem>
             ))}
           </ul>
-          <div className={classes["timer-container"]}>
-            <Timer className={classes["timer-display"]} isStart={isStart} />
-          </div>
+
           <div className={classes.test}>
             <button onClick={handleTest}>test btn</button>
-            <p>{storedValue.questionCounter}</p>
+            <p>{questionNum}</p>
           </div>
         </section>
       )}

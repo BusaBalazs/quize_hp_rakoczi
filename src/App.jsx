@@ -1,8 +1,4 @@
-import { useState } from "react";
-
 import Questions from "./components/Questions";
-
-import Timer from "./components/Timer";
 
 import { useCtx } from "./context/context";
 
@@ -17,14 +13,13 @@ import {
   imgFlagRed,
 } from "./assets/index.js";
 
-
 //-----------------------------------------------------------
 //-----------------------------------------------------------
 
 const App = () => {
   //from context.jsx
-  const { isStart, startGame, isEnd } = useCtx();
-  const [questionNum, setQuestionNum] = useState(0)
+  const { isStart, startGame, isEnd, turnNum } = useCtx();
+
   //-----------------------------------------------------------
 
   //invoke the startGame function in context.jsx
@@ -32,24 +27,13 @@ const App = () => {
     startGame();
   };
 
-  const getTurnNum = (num) => {
-    setQuestionNum(num);
-  };
-
   //-----------------------------------------------------------
   return (
     <>
       {isStart ? (
-        <section
-          className={`${classes["container"]} ${
-            classes[`bg-${questionNum + 1}`]
-          } ${classes["landscape-bg"]}`}
-        >
-          <Questions gameTurn={getTurnNum} />
-          <div className={classes["timer-container"]}>
-            <Timer className={classes["timer-display"]} isEnd={isEnd} />
-          </div>
-        </section>
+        <>
+          <Questions />
+        </>
       ) : (
         <section className={classes["start-page"]}>
           <div className={classes["btn-container"]}>

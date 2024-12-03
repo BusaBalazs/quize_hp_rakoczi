@@ -14,7 +14,6 @@ export function CtxProvider(props) {
   const [isStart, setIsStart] = useState();
   const [isEnd, setIsEnd] = useState(false);
   const [finalTime, setFinalTime] = useState();
- 
 
   //-------------------------------------------------------------
 

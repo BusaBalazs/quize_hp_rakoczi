@@ -17,7 +17,7 @@ import { imgWand, mapImg } from "../assets/index.js";
 //-----------------------------------------------------------------
 //-----------------------------------------------------------------
 
-const Modal = forwardRef(({ onCancel, getScanId }, ref) => {
+const Modal = forwardRef(({ onCancel, getScanId, modalText }, ref) => {
   const dialog = useRef();
   const [isScan, setIsScan] = useState(false);
   const { isEnd, finalTime, restart } = useCtx();
@@ -52,8 +52,7 @@ const Modal = forwardRef(({ onCancel, getScanId }, ref) => {
       return;
     dialog.current.close();
   }; */
-
- 
+console.log(modalText.qr)
   //-----------------------------------------------------------------
   return (
     <dialog
@@ -68,7 +67,9 @@ const Modal = forwardRef(({ onCancel, getScanId }, ref) => {
         {!isScan && !isEnd && (
           <>
             <div>
-              <h2>helyes a válasz!</h2>
+              <h2 className={!modalText.qr ? classes.alert : null}>
+                {modalText.title}
+              </h2>
 
               <img
                 src={imgWand}
@@ -76,7 +77,9 @@ const Modal = forwardRef(({ onCancel, getScanId }, ref) => {
                 alt="magic wand"
               />
 
-              <p>Keresd meg a következő jelet!</p>
+              <p className={!modalText.qr ? classes.alert : null}>
+                {modalText.paragraphe}
+              </p>
             </div>
             <span className={classes["map-img-container"]}>
               <img src={mapImg} alt="map" className={classes["map-img"]} />
@@ -92,7 +95,9 @@ const Modal = forwardRef(({ onCancel, getScanId }, ref) => {
         {isEnd && (
           <>
             <p>Szuper vagy!</p>
-            <button onClick={handleRestart} className={classes["restart-btn"]}>Restart</button>
+            <button onClick={handleRestart} className={classes["restart-btn"]}>
+              Restart
+            </button>
             {finalTime && <p>{`Az időd: ${finalTime}`}</p>}
           </>
         )}

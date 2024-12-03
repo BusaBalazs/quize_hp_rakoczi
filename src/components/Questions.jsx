@@ -6,12 +6,14 @@ import { useCtx } from "../context/context";
 
 import QuestionItem from "./QuestionItem";
 import Modal from "./Modal";
+import Timer from "./Timer";
 
 //-----------------------------------------------------------------
 import classes from "./Questions.module.css";
 //-----------------------------------------------------------------
 
 import { question } from "../lib/testData";
+import { ANSWER_FEEDBACK, QR_FEEDBACK } from "../lib/constatnt";
 import nimbusImg from "../assets/nimbusz_2000.png";
 
 //-----------------------------------------------------------------
@@ -40,15 +42,16 @@ const setLocalData = (key, value) => {
 //-----------------------------------------------------------------
 //-----------------------------------------------------------------
 
-const Questions = ({ gameTurn }) => {
+const Questions = () => {
   const dialog = useRef();
 
   const [answerIsTrue, setAnswerIsTrue] = useState(true);
   const [questionNum, setQuestionNum] = useState();
+  const [feedback, setFeedback] = useState(ANSWER_FEEDBACK);
 
   const btns = useRef([]);
 
-  const { onTurn } = useCtx();
+  const { onTurn, isEnd } = useCtx();
 
   //---------------------------------------------------------------
 
@@ -96,6 +99,35 @@ const Questions = ({ gameTurn }) => {
   const handleGetScanId = (result) => {
     dialog.current.close();
     if (result === questionId[questionNum]) {
+      try {
+        const getStatus = getLocaldata("status");
+        let getCounter = getStatus.questionCounter;
+        getCounter++;
+
+        setLocalData("status", { ...getStatus, questionCounter: getCounter });
+
+        //listen every game turn to the last question and invoke the onTurn function in context.jsx
+        if (getCounter === question.length) {
+          dialog.current.open();
+          onTurn();
+          setQuestionNum(getCounter - 1);
+          return;
+        }
+        setQuestionNum(getCounter);
+        setFeedback(ANSWER_FEEDBACK);
+      } catch (error) {
+        console.log(error);
+      }
+    } else {
+      dialog.current.open();
+      setFeedback(QR_FEEDBACK);
+    }
+  };
+
+  //--------------------------------------------------------------
+
+  const handleTest = () => {
+    try {
       const getStatus = getLocaldata("status");
       let getCounter = getStatus.questionCounter;
       getCounter++;
@@ -110,38 +142,26 @@ const Questions = ({ gameTurn }) => {
         return;
       }
       setQuestionNum(getCounter);
-    } else {
-      dialog.current.open();
+    } catch (error) {
+      console.log(error);
     }
-  };
-
-  //--------------------------------------------------------------
-
-  const handleTest = () => {
-    const getStatus = getLocaldata("status");
-    let getCounter = getStatus.questionCounter;
-    getCounter++;
-
-    setLocalData("status", { ...getStatus, questionCounter: getCounter });
-
-    //listen every game turn to the last question and invoke the onTurn function in context.jsx
-    if (getCounter === question.length) {
-      dialog.current.open();
-      onTurn();
-      setQuestionNum(getCounter - 1);
-      return;
-    }
-    setQuestionNum(getCounter);
   };
 
   // forward the number of question to App.jsx for set the background
-  gameTurn(questionNum);
+
   //--------------------------------------------------------------
   return (
     <>
-      <Modal ref={dialog} onCancel={handlCancel} getScanId={handleGetScanId} />
+      <Modal
+        ref={dialog}
+        onCancel={handlCancel}
+        getScanId={handleGetScanId}
+        modalText={feedback}
+      />
       {question[questionNum] && (
-        <section>
+        <section
+          className={`${classes["container"]} ${classes[`bg-${questionNum}`]}`}
+        >
           <div className={classes["question-container"]}>
             <img
               src={nimbusImg}
@@ -165,7 +185,9 @@ const Questions = ({ gameTurn }) => {
               </QuestionItem>
             ))}
           </ul>
-
+          <div className={classes["timer-container"]}>
+            <Timer className={classes["timer-display"]} isEnd={isEnd} />
+          </div>
           <div className={classes.test}>
             <button onClick={handleTest}>test btn</button>
             <p>{questionNum}</p>

@@ -21,13 +21,25 @@
   background-position: center;
 }
 
+.bg-2 {
+  background: no-repeat url("../assets/blur_bg_1.jpg");
+  background-size: cover;
+  background-position: center;
+}
+
+.bg-3 {
+  background: no-repeat url("../assets/blur_bg_2.jpg");
+  background-size: cover;
+  background-position: center;
+}
+
 @media screen and (orientation: landscape) {
   .landscape-bg {
     background-position: center;
   }
 }
 
-/*********************************************/*
+/*********************************************/
 
 .question-container {
   margin-bottom: 1.5em;
@@ -42,8 +54,7 @@
   border: solid 1px var(--color-orage-100);
 }
 
-.question h2,
-.list li button {
+.question h2{
   font-size: var(--font-size-l);
 }
 
@@ -71,12 +82,12 @@
 
 .list li button {
   width: 100%;
-  padding: 0.3em 0;
-  letter-spacing: 0.09em;
+  padding:.5em;
+  font-size: var(--font-size-m);
   color: var(--color-white);
   background-color: var(--color-black-bg);
   border: solid 1px var(--color-orage-100);
-  border-radius: var(--border-radius-xl);
+  border-radius: var(--border-radius-l);
 }
 
 

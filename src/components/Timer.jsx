@@ -24,7 +24,6 @@ const Timer = ({ isEnd, ...props }) => {
       const time = setInterval(() => {
         const getStatus = JSON.parse(localStorage.getItem("status"));
         let getTime = getStatus.time;
-
         getTime.sec++;
         if (getTime.sec >= 60) {
           getTime.min++;
@@ -48,11 +47,8 @@ const Timer = ({ isEnd, ...props }) => {
       //and stop the timer
 
       if (isEnd) {
-        getFinalTime(
-          `${displayTime(elapsedTime.hour)}:${displayTime(
-            elapsedTime.min
-          )}:${displayTime(elapsedTime.sec)}`
-        );
+        const getStatus = JSON.parse(localStorage.getItem("status"));
+        getFinalTime(getStatus.time);
         clearInterval(time);
       }
 

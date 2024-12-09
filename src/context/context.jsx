@@ -8,6 +8,11 @@ export function useCtx() {
   return useContext(Ctx);
 }
 
+//-----------------------------------------------------------
+const displayTime = (unit) => {
+  return unit < 10 ? `0${unit}` : unit;
+};
+
 //-------------------------------------------------------------
 //-------------------------------------------------------------
 export function CtxProvider(props) {
@@ -49,7 +54,12 @@ export function CtxProvider(props) {
 
   //-------------------------------------------------------------
   const getFinalTime = (time) => {
-    setFinalTime(time);
+    
+    setFinalTime(
+      `${displayTime(time.hour)}:${displayTime(time.min)}:${displayTime(
+        time.sec
+      )}`
+    );
   };
 
   //-------------------------------------------------------------

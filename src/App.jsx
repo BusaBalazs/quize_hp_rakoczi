@@ -18,7 +18,7 @@ import {
 
 const App = () => {
   //from context.jsx
-  const { isStart, startGame, isEnd, turnNum } = useCtx();
+  const { isStart, startGame } = useCtx();
 
   //-----------------------------------------------------------
 
@@ -26,7 +26,7 @@ const App = () => {
   const handleClick = () => {
     startGame();
   };
-
+  
   //-----------------------------------------------------------
   return (
     <>
@@ -52,7 +52,6 @@ const App = () => {
               src={imgFlagBrown}
               alt="brown flag"
             />
-
             <img
               className={`${classes["flag-img"]} ${classes["flag-midle"]}`}
               src={imgFlagBlue}
@@ -63,7 +62,6 @@ const App = () => {
               src={imgFlagRed}
               alt="red flag"
             />
-
             <img
               className={classes["flag-img"]}
               src={imgFlagGreen}

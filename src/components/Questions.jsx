@@ -1,4 +1,6 @@
 import React, { useRef, useState, useEffect } from "react";
+import { useGSAP } from "@gsap/react";
+import gsap from "gsap";
 
 import { useCtx } from "../context/context";
 
@@ -46,16 +48,30 @@ const Questions = () => {
   const dialog = useRef();
 
   const [answerIsTrue, setAnswerIsTrue] = useState(true);
-  const [questionNum, setQuestionNum] = useState();
+  const [questionNum, setQuestionNum] = useState(0);
   const [feedback, setFeedback] = useState(ANSWER_FEEDBACK);
 
   const btns = useRef([]);
 
-  const { onTurn, isEnd } = useCtx();
+  const { onTurn, isEnd, getFinalTime } = useCtx();
 
   //---------------------------------------------------------------
 
   const questionId = question.map((i) => i.id);
+
+  //--------------------------------------------------------------
+
+  useEffect(() => {
+    const getStatus = getLocaldata("status");
+    let getCounter = getStatus.questionCounter;
+    //listen every game turn to the last question and invoke the onTurn function in context.jsx
+    
+    if (getCounter + 1 === question.length) {
+      dialog.current.open();
+      onTurn();
+      //getFinalTime(getStatus.time);
+    }
+  }, []);
 
   //--------------------------------------------------------------
 
@@ -69,6 +85,30 @@ const Questions = () => {
       setQuestionNum(getCounter);
     }
   }, []);
+
+  //--------------------------------------------------------------
+
+  useGSAP(() => {
+    gsap.from(".question-gsap", {
+      x: -100,
+      opacity: 0,
+      ease: "power1.inOut",
+      duration: 0.4,
+      stagger: 0.4,
+    });
+  });
+
+  useEffect(() => {
+    if (questionNum) {
+      gsap.from(".question-gsap", {
+        x: -100,
+        opacity: 0,
+        ease: "power1.inOut",
+        duration: 0.4,
+        stagger: 0.4,
+      });
+    }
+  }, [questionNum]);
 
   //--------------------------------------------------------------
 
@@ -111,6 +151,8 @@ const Questions = () => {
           dialog.current.open();
           onTurn();
           setQuestionNum(getCounter - 1);
+          getCounter--;
+          setLocalData("status", { ...getStatus, questionCounter: getCounter });
           return;
         }
         setQuestionNum(getCounter);
@@ -139,15 +181,16 @@ const Questions = () => {
         dialog.current.open();
         onTurn();
         setQuestionNum(getCounter - 1);
+        getCounter--;
+        setLocalData("status", { ...getStatus, questionCounter: getCounter });
         return;
       }
+
       setQuestionNum(getCounter);
     } catch (error) {
       console.log(error);
     }
   };
-
-  // forward the number of question to App.jsx for set the background
 
   //--------------------------------------------------------------
   return (
@@ -158,42 +201,42 @@ const Questions = () => {
         getScanId={handleGetScanId}
         modalText={feedback}
       />
-      {question[questionNum] && (
-        <section
-          className={`${classes["container"]} ${classes[`bg-${questionNum}`]}`}
-        >
-          <div className={classes["question-container"]}>
-            <img
-              src={nimbusImg}
-              alt="nimbusz 2000"
-              className={classes["nimbus-img"]}
-            />
-            <div className={classes["question"]}>
-              <h2>{question[questionNum].question}</h2>
-              <code>{question[questionNum].operation}</code>
-            </div>
+
+      <section
+        className={`${classes["container"]} ${classes[`bg-${questionNum}`]}`}
+      >
+        <div className={classes["question-container"]}>
+          <img
+            src={nimbusImg}
+            alt="nimbusz 2000"
+            className={classes["nimbus-img"]}
+          />
+          <div className={classes["question"]}>
+            <h2>{question[questionNum].question}</h2>
+            <code>{question[questionNum].operation}</code>
           </div>
-          <ul className={classes.list}>
-            {question[questionNum].answers.map((item, i) => (
-              <QuestionItem
-                key={item.answer}
-                CheckAnswer={(e, index = i) => isOk(e, index, item.right)}
-                isDisabled={!answerIsTrue ? true : false}
-                ref={(el) => (btns.current[i] = el)}
-              >
-                {item.answer}
-              </QuestionItem>
-            ))}
-          </ul>
-          <div className={classes["timer-container"]}>
-            <Timer className={classes["timer-display"]} isEnd={isEnd} />
-          </div>
-          <div className={classes.test}>
-            <button onClick={handleTest}>test btn</button>
-            <p>{questionNum}</p>
-          </div>
-        </section>
-      )}
+        </div>
+        <ul className={classes.list}>
+          {question[questionNum].answers.map((item, i) => (
+            <QuestionItem
+              key={item.answer}
+              CheckAnswer={(e, index = i) => isOk(e, index, item.right)}
+              isDisabled={!answerIsTrue ? true : false}
+              ref={(el) => (btns.current[i] = el)}
+              className="question-gsap"
+            >
+              {item.answer}
+            </QuestionItem>
+          ))}
+        </ul>
+        <div className={classes["timer-container"]}>
+          <Timer className={classes["timer-display"]} isEnd={isEnd} />
+        </div>
+        <div className={classes.test}>
+          <button onClick={handleTest}>test btn</button>
+          <p>{questionNum}</p>
+        </div>
+      </section>
     </>
   );
 };

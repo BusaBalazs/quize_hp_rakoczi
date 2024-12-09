@@ -1,9 +1,9 @@
 import { forwardRef } from "react";
 
 const QuestionItem = forwardRef(
-  ({ children, CheckAnswer, isDisabled }, ref) => {
+  ({ children, CheckAnswer, isDisabled, ...props }, ref) => {
     return (
-      <li>
+      <li {...props}>
         <button ref={ref} onClick={CheckAnswer} disabled={isDisabled}>
           {children}
         </button>

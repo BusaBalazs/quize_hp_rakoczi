@@ -52,7 +52,7 @@ const Modal = forwardRef(({ onCancel, getScanId, modalText }, ref) => {
       return;
     dialog.current.close();
   }; */
-console.log(modalText.qr)
+
   //-----------------------------------------------------------------
   return (
     <dialog
@@ -77,7 +77,7 @@ console.log(modalText.qr)
                 alt="magic wand"
               />
 
-              <p className={!modalText.qr ? classes.alert : null}>
+              <p className={`${!modalText.qr ? classes.alert : null} ${classes["feedback-p"]}`}>
                 {modalText.paragraphe}
               </p>
             </div>
@@ -94,11 +94,16 @@ console.log(modalText.qr)
         )}
         {isEnd && (
           <>
-            <p>Szuper vagy!</p>
+            <h2>Szuper vagy!</h2>
+            <img
+                src={imgWand}
+                className={classes["magic-wand-img"]}
+                alt="magic wand"
+              />
+            {finalTime && <p className={classes["final-time"]}>{`Az időd: ${finalTime}`}</p>}
             <button onClick={handleRestart} className={classes["restart-btn"]}>
-              Restart
+              Újra játszok
             </button>
-            {finalTime && <p>{`Az időd: ${finalTime}`}</p>}
           </>
         )}
       </div>

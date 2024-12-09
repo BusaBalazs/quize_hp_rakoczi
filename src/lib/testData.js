@@ -20,57 +20,57 @@ export const question = [
   },
   {
     id: "answer-2",
-    question: "Mi a varázslók kedvelt itala?",
+    question: "Melyik horcruxot pusztították el először?",
     operation: "",
     answers: [
       {
-        answer: "Vajsör",
+        answer: "A naplót",
         right: true,
       },
       {
-        answer: "Kakaó",
+        answer: "A medált",
         right: false,
       },
       {
-        answer: "Mézsör",
+        answer: "A gyűrűt",
         right: false,
       },
     ],
   },
   {
     id: "answer-3",
-    question: "Mennyi a művelet eredménye?",
-    operation: "8 * 5",
+    question: "Milyen fajta sárkány volt Norbert, Hagrid kis kedvence?",
+    operation: "",
     answers: [
       {
-        answer: "40",
+        answer: "Norvég Tarajossárkány",
         right: true,
       },
       {
-        answer: "28",
+        answer: "Magyar Mennydörgő",
         right: false,
       },
       {
-        answer: "12",
+        answer: "Svéd Sróforrúsárkány",
         right: false,
       },
     ],
   },
   {
     id: "answer-4",
-    question: "Mennyi a művelet eredménye?",
-    operation: "6 * 6",
+    question: "Hol található a Szükség szobája?",
+    operation: "",
     answers: [
       {
-        answer: "36",
+        answer: "Hetedik emelet, baloldali folyosó",
         right: true,
       },
       {
-        answer: "2",
+        answer: "Harmadik emeleti folyosó, jobb oldali része",
         right: false,
       },
       {
-        answer: "58",
+        answer: "Alagsor, a Hugrabug klubhelyiséggel szemben",
         right: false,
       },
     ],

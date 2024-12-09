@@ -27,7 +27,7 @@
   text-transform: uppercase;
 }
 
-.modal p {
+.feedback-p {
   margin: 1.2em 0 0.4em 0;
 }
 
@@ -82,6 +82,13 @@
   background-color: var(--color-orage-100);
   border: 1px solid var(--color-orage-200);
   box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+}
+
+.final-time {
+  margin: 1.8em;
+  padding: 0.65em 1em;
+  background-color: var(--color-alpha-orage-100);
+  border: solid 1px var(--color-orage-200);
 }
 
 .alert {

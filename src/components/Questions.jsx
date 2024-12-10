@@ -65,7 +65,7 @@ const Questions = () => {
     const getStatus = getLocaldata("status");
     let getCounter = getStatus.questionCounter;
     //listen every game turn to the last question and invoke the onTurn function in context.jsx
-    
+
     if (getCounter + 1 === question.length) {
       dialog.current.open();
       onTurn();
@@ -95,6 +95,14 @@ const Questions = () => {
       ease: "power1.inOut",
       duration: 0.4,
       stagger: 0.4,
+      delay: 0.5,
+    });
+
+    gsap.from("#question-container", {
+      y: -50,
+      opacity: 0,
+      duration: 1,
+      ease: "bounce.out",
     });
   });
 
@@ -106,6 +114,14 @@ const Questions = () => {
         ease: "power1.inOut",
         duration: 0.4,
         stagger: 0.4,
+        delay: 0.5,
+      });
+
+      gsap.from("#question-container", {
+        y: -50,
+        opacity: 0,
+        duration: 1,
+        ease: "bounce.out",
       });
     }
   }, [questionNum]);
@@ -205,7 +221,7 @@ const Questions = () => {
       <section
         className={`${classes["container"]} ${classes[`bg-${questionNum}`]}`}
       >
-        <div className={classes["question-container"]}>
+        <div id="question-container" className={classes["question-container"]}>
           <img
             src={nimbusImg}
             alt="nimbusz 2000"

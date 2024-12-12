@@ -89,7 +89,8 @@ const Questions = () => {
   //--------------------------------------------------------------
 
   useGSAP(() => {
-    gsap.from(".question-gsap", {
+    if (questionNum >= 0) {
+       gsap.from(".question-gsap", {
       x: -100,
       opacity: 0,
       ease: "power1.inOut",
@@ -104,27 +105,11 @@ const Questions = () => {
       duration: 1,
       ease: "bounce.out",
     });
-  });
-
-  useEffect(() => {
-    if (questionNum) {
-      gsap.from(".question-gsap", {
-        x: -100,
-        opacity: 0,
-        ease: "power1.inOut",
-        duration: 0.4,
-        stagger: 0.4,
-        delay: 0.5,
-      });
-
-      gsap.from("#question-container", {
-        y: -50,
-        opacity: 0,
-        duration: 1,
-        ease: "bounce.out",
-      });
     }
+   
   }, [questionNum]);
+
+  
 
   //--------------------------------------------------------------
 

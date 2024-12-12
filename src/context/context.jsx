@@ -19,6 +19,7 @@ export function CtxProvider(props) {
   const [isStart, setIsStart] = useState();
   const [isEnd, setIsEnd] = useState(false);
   const [finalTime, setFinalTime] = useState();
+  const [isRestart, setIsRestart] = useState(false);
 
   //-------------------------------------------------------------
 
@@ -33,6 +34,7 @@ export function CtxProvider(props) {
   //set the initial local storage when click the Start button
   const startGame = () => {
     setIsStart(true);
+    setIsRestart(false);
     localStorage.setItem(
       "status",
       JSON.stringify({
@@ -54,7 +56,6 @@ export function CtxProvider(props) {
 
   //-------------------------------------------------------------
   const getFinalTime = (time) => {
-    
     setFinalTime(
       `${displayTime(time.hour)}:${displayTime(time.min)}:${displayTime(
         time.sec
@@ -66,6 +67,7 @@ export function CtxProvider(props) {
   const restart = () => {
     setIsEnd(false);
     setIsStart(false);
+    setIsRestart(true);
     window.localStorage.removeItem("status");
   };
 
@@ -78,6 +80,7 @@ export function CtxProvider(props) {
     getFinalTime,
     finalTime,
     restart,
+    isRestart,
   };
   return <Ctx.Provider value={value}>{props.children}</Ctx.Provider>;
 }

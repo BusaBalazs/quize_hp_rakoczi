@@ -1,11 +1,11 @@
+import { useEffect, useRef } from "react";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
+import { Cloudinary } from "@cloudinary/url-gen/index";
 
 import Questions from "./components/Questions";
 
 import { useCtx } from "./context/context";
-
-import video from "./assets/video/test_3.gif"
 
 //-----------------------------------------------------------
 import classes from "./App.module.css";
@@ -20,39 +20,102 @@ import {
 
 //-----------------------------------------------------------
 //-----------------------------------------------------------
+const cld = new Cloudinary({
+  cloud: {
+    cloudName: "dironarnd",
+  },
+});
 
 const App = () => {
+  const videoRef = useRef();
+
   //from context.jsx
-  const { isStart, startGame } = useCtx();
+  const { isStart, startGame, isRestart } = useCtx();
+
+  useEffect(() => {
+    const loaded = () => {
+      if (videoRef.current) {
+        gsap.to(".gsap-wand", {
+          x: 0,
+          scale: 1,
+          rotateY: 0,
+          rotateZ: 0,
+          duration: 1.5,
+          ease: "back.inOut",
+        });
+
+        gsap.from("#start-btn", {
+          scale: 0.5,
+          opacity: 0,
+          ease: "expo.out",
+          duration: 1.5,
+          delay: 0.5,
+        });
+
+        gsap.from(".gsap-flag", {
+          y: 80,
+          opacity: 0,
+          delay: 1,
+          stagger: 0.2,
+          ease: "back.out",
+          duration: 1,
+        });
+        videoRef.current.play();
+
+        gsap.to("#video", {
+          opacity: 0,
+          delay: 2,
+        });
+      }
+    };
+
+    if (document.readyState === "complete") {
+      loaded();
+    } else {
+      window.addEventListener("load", loaded);
+
+      return () => {
+        window.removeEventListener("load", loaded);
+      };
+    }
+  }, []);
 
   //-----------------------------------------------------------
   useGSAP(() => {
-    gsap.from(".gsap-wand", {
-      x: 130,
-      scale: 1.5,
-      rotateY: -50,
-      rotateZ: 35,
-      duration: 1.5,
-      ease: "back.inOut",
-    });
+    if (isRestart) {
+      gsap.to(".gsap-wand", {
+        x: 0,
+        scale: 1,
+        rotateY: 0,
+        rotateZ: 0,
+        duration: 1.5,
+        ease: "back.inOut",
+      });
 
-    gsap.from("#start-btn", {
-      scale: .5,
-      opacity:0,
-      ease: "expo.out",
-      duration: 1,
-      delay: 1.2
-    })
+      gsap.from("#start-btn", {
+        scale: 0.5,
+        opacity: 0,
+        ease: "expo.out",
+        duration: 1.5,
+        delay: 0.5,
+      });
 
-    gsap.from(".gsap-flag", {
-      y: 80,
-      opacity: 0,
-      delay: 1,
-      stagger: .2,
-      ease: "back.out",
-      duration: .5
-    });
-  }, []);
+      gsap.from(".gsap-flag", {
+        y: 80,
+        opacity: 0,
+        delay: 1,
+        stagger: 0.2,
+        ease: "back.out",
+        duration: 1,
+      });
+      videoRef.current.play();
+
+      gsap.to("#video", {
+        opacity: 0,
+        delay: 2,
+      });
+    }
+  }, [isRestart]);
 
   //-----------------------------------------------------------
 
@@ -60,7 +123,6 @@ const App = () => {
   const handleClick = () => {
     startGame();
   };
-
   //-----------------------------------------------------------
   return (
     <>
@@ -70,9 +132,27 @@ const App = () => {
         </>
       ) : (
         <section className={classes["start-page"]}>
-          {/* <img src={video} alt="" /> */}
+          <video
+            id="video"
+            ref={videoRef}
+            muted
+            playsInline={true}
+            className={classes.video}
+          >
+            <source
+              src={cld
+                .video("rakoczi_kert/aticlxndsk717unxk3cb")
+                .quality("auto")
+                .toURL()}
+              type="video/mp4"
+            />
+          </video>
           <div className={classes["btn-container"]}>
-            <button id="start-btn" className={classes["start-btn"]} onClick={handleClick}>
+            <button
+              id="start-btn"
+              className={classes["start-btn"]}
+              onClick={handleClick}
+            >
               start
             </button>
             <img

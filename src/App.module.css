@@ -25,9 +25,12 @@
   -webkit-text-stroke: 1px var(--color-orage-200);
   background: transparent;
   filter: drop-shadow(2px 2px 2px rgba(0, 0, 0, 0.25));
+
+  z-index: 5;
 }
 
 .magic-wand-img {
+  transform: translateX(130px) rotateY(-50deg) rotateZ(35deg) scale(1.5);
   width: 70%;
   margin-top: -0.5rem;
 }
@@ -47,4 +50,11 @@
 .flag-img {
   display: block;
   width: 18%;
+}
+
+.video {
+  position: absolute;
+  width: 150%;
+  mix-blend-mode: screen;
+  z-index: 1;
 }

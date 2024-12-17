@@ -91,8 +91,7 @@ const Questions = () => {
   useLayoutEffect(() => {
     const container = questionRef.current;
     let ctx;
-    if (questionNum >=0) {
-      console.log(questionNum);
+    if (questionNum >= 0) {
       gsap.to(".answer-gsap", {
         x: 0,
         opacity: 1,
@@ -111,7 +110,6 @@ const Questions = () => {
           ease: "bounce.out",
         });
       });
-
     }
     return () => ctx.revert();
   }, [questionNum]);

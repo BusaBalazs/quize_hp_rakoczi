@@ -43,7 +43,6 @@
 
 .question-container {
   margin-bottom: 1.5em;
- 
 }
 
 .question {
@@ -55,7 +54,7 @@
   border: solid 1px var(--color-orage-100);
 }
 
-.question h2{
+.question h2 {
   font-size: var(--font-size-l);
 }
 
@@ -85,15 +84,13 @@
 
 .list li button {
   width: 100%;
-  padding:.5em;
+  padding: 0.5em;
   font-size: var(--font-size-m);
   color: var(--color-white);
   background-color: var(--color-black-bg);
   border: solid 1px var(--color-orage-100);
   border-radius: var(--border-radius-l);
- 
 }
-
 
 /* timer */
 /***********************************/
@@ -126,7 +123,6 @@
   background-color: var(--color-alpha-orage-100);
   border: solid 1px var(--color-orage-200);
 }
-
 
 /*test */
 /***********************************/

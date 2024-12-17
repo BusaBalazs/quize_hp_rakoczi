@@ -99,7 +99,7 @@ const Questions = () => {
         ease: "power1.inOut",
         duration: 0.4,
         stagger: 0.4,
-        delay: 0.5,
+        delay: 0.7,
       });
 
       ctx = gsap.context(() => {
@@ -107,6 +107,7 @@ const Questions = () => {
           y: -50,
           opacity: 0,
           duration: 1,
+          delay: 0.2,
           ease: "bounce.out",
         });
       });

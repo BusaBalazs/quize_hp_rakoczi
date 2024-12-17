@@ -43,6 +43,7 @@
 
 .question-container {
   margin-bottom: 1.5em;
+ 
 }
 
 .question {
@@ -78,6 +79,8 @@
 
 .list li {
   width: 100%;
+  transform: translateX(-100px);
+  opacity: 0;
 }
 
 .list li button {
@@ -88,6 +91,7 @@
   background-color: var(--color-black-bg);
   border: solid 1px var(--color-orage-100);
   border-radius: var(--border-radius-l);
+ 
 }
 
 

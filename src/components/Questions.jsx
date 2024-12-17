@@ -1,4 +1,4 @@
-import React, { useRef, useState, useEffect } from "react";
+import React, { useRef, useState, useEffect, useLayoutEffect } from "react";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 
@@ -52,8 +52,8 @@ const Questions = () => {
   const [feedback, setFeedback] = useState(ANSWER_FEEDBACK);
 
   const btns = useRef([]);
-
-  const { onTurn, isEnd, getFinalTime } = useCtx();
+  const questionRef = useRef();
+  const { onTurn, isEnd } = useCtx();
 
   //---------------------------------------------------------------
 
@@ -88,28 +88,32 @@ const Questions = () => {
 
   //--------------------------------------------------------------
 
-  useGSAP(() => {
-    if (questionNum >= 0) {
-       gsap.from(".question-gsap", {
-      x: -100,
-      opacity: 0,
-      ease: "power1.inOut",
-      duration: 0.4,
-      stagger: 0.4,
-      delay: 0.5,
-    });
+  useLayoutEffect(() => {
+    const container = questionRef.current;
+    let ctx;
+    if (questionNum >=0) {
+      console.log(questionNum);
+      gsap.to(".answer-gsap", {
+        x: 0,
+        opacity: 1,
+        ease: "power1.inOut",
+        duration: 0.4,
+        stagger: 0.4,
+        delay: 0.5,
+      });
 
-    gsap.from("#question-container", {
-      y: -50,
-      opacity: 0,
-      duration: 1,
-      ease: "bounce.out",
-    });
+      ctx = gsap.context(() => {
+        gsap.from(container, {
+          y: -50,
+          opacity: 0,
+          duration: 1,
+          ease: "bounce.out",
+        });
+      });
+
     }
-   
+    return () => ctx.revert();
   }, [questionNum]);
-
-  
 
   //--------------------------------------------------------------
 
@@ -206,7 +210,11 @@ const Questions = () => {
       <section
         className={`${classes["container"]} ${classes[`bg-${questionNum}`]}`}
       >
-        <div id="question-container" className={classes["question-container"]}>
+        <div
+          ref={questionRef}
+          id="question-gsap"
+          className={classes["question-container"]}
+        >
           <img
             src={nimbusImg}
             alt="nimbusz 2000"
@@ -224,7 +232,7 @@ const Questions = () => {
               CheckAnswer={(e, index = i) => isOk(e, index, item.right)}
               isDisabled={!answerIsTrue ? true : false}
               ref={(el) => (btns.current[i] = el)}
-              className="question-gsap"
+              className="answer-gsap"
             >
               {item.answer}
             </QuestionItem>

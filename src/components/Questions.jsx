@@ -1,5 +1,5 @@
 import React, { useRef, useState, useEffect, useLayoutEffect } from "react";
-import { useGSAP } from "@gsap/react";
+
 import gsap from "gsap";
 
 import { useCtx } from "../context/context";
@@ -9,6 +9,7 @@ import { useCtx } from "../context/context";
 import QuestionItem from "./QuestionItem";
 import Modal from "./Modal";
 import Timer from "./Timer";
+import Process from "./Process";
 
 //-----------------------------------------------------------------
 import classes from "./Questions.module.css";
@@ -240,6 +241,8 @@ const Questions = () => {
         <div className={classes["timer-container"]}>
           <Timer className={classes["timer-display"]} isEnd={isEnd} />
         </div>
+        <Process />
+       
         <div className={classes.test}>
           <button onClick={handleTest}>test btn</button>
           <p>{questionNum}</p>

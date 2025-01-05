@@ -42,6 +42,7 @@ const getLocaldata = (key) => {
 const setLocalData = (key, value) => {
   localStorage.setItem(key, JSON.stringify(value));
 };
+
 //-----------------------------------------------------------------
 //-----------------------------------------------------------------
 
@@ -54,7 +55,7 @@ const Questions = () => {
 
   const btns = useRef([]);
   const questionRef = useRef();
-  const { onTurn, isEnd } = useCtx();
+  const { onTurn } = useCtx();
 
   //---------------------------------------------------------------
 
@@ -238,15 +239,10 @@ const Questions = () => {
             </QuestionItem>
           ))}
         </ul>
-        <div className={classes["timer-container"]}>
-          <Timer className={classes["timer-display"]} isEnd={isEnd} />
-        </div>
-        <Process />
        
-        <div className={classes.test}>
-          <button onClick={handleTest}>test btn</button>
-          <p>{questionNum}</p>
-        </div>
+        <Process numOfQuestion={"5/12"}/>
+       
+       
       </section>
     </>
   );

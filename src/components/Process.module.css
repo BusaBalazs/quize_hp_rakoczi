@@ -1,0 +1,45 @@
+/* timer */
+/***********************************/
+
+.timer-container {
+  width: 100%;
+  margin-top: 4em;
+  position: relative;
+  border-top: solid 1px var(--color-orage-200);
+}
+
+.timer-container::after {
+  content: "";
+  position: absolute;
+  top: -10px;
+  left: calc(50% - 10px);
+  display: block;
+  width: 20px;
+  height: 20px;
+  background-color: var(--color-orage-100);
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.15) inset;
+  transform: rotate(45deg);
+  z-index: 3;
+}
+
+.timer-display {
+  width: min(50%, 200px);
+  margin: auto;
+  padding: 0.65em 1em;
+  background-color: var(--color-alpha-orage-100);
+  border: solid 1px var(--color-orage-200);
+}
+
+/* process indicator */
+/***********************************/
+.process-container {
+  width: 100%;
+
+  display: flex;
+  flex-direction: column;
+ justify-content: space-between;
+}
+
+.process-indicator-container {
+
+}

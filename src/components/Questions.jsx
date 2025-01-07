@@ -8,7 +8,6 @@ import { useCtx } from "../context/context";
 
 import QuestionItem from "./QuestionItem";
 import Modal from "./Modal";
-import Timer from "./Timer";
 import Process from "./Process";
 
 //-----------------------------------------------------------------
@@ -239,10 +238,12 @@ const Questions = () => {
             </QuestionItem>
           ))}
         </ul>
-       
-        <Process numOfQuestion={"5/12"}/>
-       
-       
+
+        <Process numOfQuestion={questionNum} numOfAllQuestion={question.length}/>
+
+        <div className={classes.test}>
+          <button onClick={handleTest}>test btn</button>
+        </div>
       </section>
     </>
   );

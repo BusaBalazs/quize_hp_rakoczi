@@ -75,4 +75,23 @@ export const question = [
       },
     ],
   },
+  {
+    id: "answer-5",
+    question: "Mi Luna Lovegood patrónusa?",
+    operation: "",
+    answers: [
+      {
+        answer: "Nyúl",
+        right: true,
+      },
+      {
+        answer: "macska",
+        right: false,
+      },
+      {
+        answer: "pillangó",
+        right: false,
+      },
+    ],
+  },
 ];

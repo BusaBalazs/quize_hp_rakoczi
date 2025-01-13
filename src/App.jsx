@@ -64,7 +64,7 @@ const App = () => {
 
         gsap.to("#video", {
           opacity: 0,
-          delay: 2,
+          delay: 1.5,
         });
       }
     };
@@ -112,7 +112,7 @@ const App = () => {
 
       gsap.to("#video", {
         opacity: 0,
-        delay: 2,
+        delay: 1.5,
       });
     }
   }, [isRestart]);
@@ -141,7 +141,7 @@ const App = () => {
           >
             <source
               src={cld
-                .video("rakoczi_kert/aticlxndsk717unxk3cb")
+                .video("rakoczi_kert/qlpa6qizfzkfmbuvlwbp")
                 .quality("auto")
                 .toURL()}
               type="video/mp4"

@@ -17,6 +17,7 @@ const Process = ({ numOfQuestion, numOfAllQuestion }) => {
 
     gsap.to("#process", {
       width: `${calculatedWidth}%`,
+      delay: 1,
     });
   }, [numOfQuestion]);
 

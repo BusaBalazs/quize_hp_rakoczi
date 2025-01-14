@@ -31,6 +31,8 @@ const shuffleArray = (array) => {
 
 question.map((item) => shuffleArray(item.answers));
 
+//const questionId = question.map((i) => i.id);
+
 //-----------------------------------------------------------------
 // local storage functions
 
@@ -51,6 +53,7 @@ const Questions = () => {
   const [answerIsTrue, setAnswerIsTrue] = useState(true);
   const [questionNum, setQuestionNum] = useState(0);
   const [feedback, setFeedback] = useState(ANSWER_FEEDBACK);
+  const [questionId, setQuestionId] = useState([]);
 
   const btns = useRef([]);
   const questionRef = useRef();
@@ -58,34 +61,29 @@ const Questions = () => {
 
   //---------------------------------------------------------------
 
-  const questionId = question.map((i) => i.id);
-
   //--------------------------------------------------------------
 
   useEffect(() => {
     const getStatus = getLocaldata("status");
     let getCounter = getStatus.questionCounter;
-    //listen every game turn to the last question and invoke the onTurn function in context.jsx
 
-    if (getCounter + 1 === question.length) {
-      dialog.current.open();
-      onTurn();
-      //getFinalTime(getStatus.time);
-    }
-  }, []);
-
-  //--------------------------------------------------------------
-
-  // when the page loded or reloaded this useEffect set the actual question number, if the game just has begun set the first question
-  useEffect(() => {
-    const getStatus = getLocaldata("status");
-    const getCounter = getStatus.questionCounter;
+    // when the page loded or reloaded this useEffect set the actual question number, if the game just has begun set the first question
     if (getCounter === 0) {
       setQuestionNum(0);
     } else {
       setQuestionNum(getCounter);
     }
+
+    //listen every game turn to the last question and invoke the onTurn function in context.jsx
+    if (getCounter + 1 === question.length) {
+      dialog.current.open();
+      onTurn();
+      //getFinalTime(getStatus.time);
+    }
+
+    setQuestionId(getStatus.questionId);
   }, []);
+
 
   //--------------------------------------------------------------
 
@@ -239,7 +237,10 @@ const Questions = () => {
           ))}
         </ul>
 
-        <Process numOfQuestion={questionNum} numOfAllQuestion={question.length}/>
+        <Process
+          numOfQuestion={questionNum}
+          numOfAllQuestion={question.length}
+        />
 
         <div className={classes.test}>
           <button onClick={handleTest}>test btn</button>

@@ -1,5 +1,7 @@
 import { createContext, useContext, useState, useEffect } from "react";
 
+import { question } from "../lib/testData";
+
 //-------------------------------------------------------------
 const Ctx = createContext();
 
@@ -13,6 +15,16 @@ const displayTime = (unit) => {
   return unit < 10 ? `0${unit}` : unit;
 };
 
+//-----------------------------------------------------------
+const shuffleArray = (array) => {
+  for (let i = array.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [array[i], array[j]] = [array[j], array[i]];
+  }
+  return array;
+};
+const questionId = question.map((i) => i.id);
+shuffleArray(questionId)
 //-------------------------------------------------------------
 //-------------------------------------------------------------
 export function CtxProvider(props) {
@@ -20,7 +32,7 @@ export function CtxProvider(props) {
   const [isEnd, setIsEnd] = useState(false);
   const [finalTime, setFinalTime] = useState();
   const [isRestart, setIsRestart] = useState(false);
-
+  
   //-------------------------------------------------------------
 
   //if local storage is empty the game has not begun yet
@@ -38,6 +50,7 @@ export function CtxProvider(props) {
     localStorage.setItem(
       "status",
       JSON.stringify({
+        questionId,
         isStart: "true",
         questionCounter: 0,
         time: {

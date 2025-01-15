@@ -1,6 +1,6 @@
 export const question = [
   {
-    id: "answer-1",
+    id: 0,
     question: "Mi a varázslók kedvelt itala?",
     operation: "",
     answers: [
@@ -19,7 +19,7 @@ export const question = [
     ],
   },
   {
-    id: "answer-2",
+    id: 1,
     question: "Melyik horcruxot pusztították el először?",
     operation: "",
     answers: [
@@ -38,7 +38,7 @@ export const question = [
     ],
   },
   {
-    id: "answer-3",
+    id: 2,
     question: "Milyen fajta sárkány volt Norbert, Hagrid kis kedvence?",
     operation: "",
     answers: [
@@ -57,7 +57,7 @@ export const question = [
     ],
   },
   {
-    id: "answer-4",
+    id: 3,
     question: "Hol található a Szükség szobája?",
     operation: "",
     answers: [
@@ -76,7 +76,7 @@ export const question = [
     ],
   },
   {
-    id: "answer-5",
+    id: 4,
     question: "Mi Luna Lovegood patrónusa?",
     operation: "",
     answers: [
@@ -95,3 +95,5 @@ export const question = [
     ],
   },
 ];
+
+export const nextQrPlace = ["HUGI SZOBÁJÁBAN", "NAPPALIBAN", "LENTI FÜRDŐBEN", "FANNI SZOBÁJÁBAN", "HÁLÓSZOBÁBAN"];

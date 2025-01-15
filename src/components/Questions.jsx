@@ -31,8 +31,6 @@ const shuffleArray = (array) => {
 
 question.map((item) => shuffleArray(item.answers));
 
-//const questionId = question.map((i) => i.id);
-
 //-----------------------------------------------------------------
 // local storage functions
 
@@ -137,7 +135,7 @@ const Questions = () => {
   };
 
   //--------------------------------------------------------------
-
+console.log(questionId[questionNum])
   // check the QR code, and set the next question if the code is right
   const handleGetScanId = (result) => {
     dialog.current.close();
@@ -203,6 +201,7 @@ const Questions = () => {
         onCancel={handlCancel}
         getScanId={handleGetScanId}
         modalText={feedback}
+        actualQuestionNum={questionNum}
       />
 
       <section

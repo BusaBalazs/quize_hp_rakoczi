@@ -135,7 +135,7 @@ const Questions = () => {
   };
 
   //--------------------------------------------------------------
-console.log(questionId[questionNum])
+  
   // check the QR code, and set the next question if the code is right
   const handleGetScanId = (result) => {
     dialog.current.close();

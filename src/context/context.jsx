@@ -24,7 +24,29 @@ const shuffleArray = (array) => {
   return array;
 };
 const questionId = question.map((i) => i.id);
-shuffleArray(questionId)
+shuffleArray(questionId);
+
+//-----------------------------------------------------------
+const getLocaldata = (key) => {
+  return JSON.parse(localStorage.getItem(key));
+};
+
+const setLocalData = (key, value) => {
+  localStorage.setItem(key, JSON.stringify(value));
+};
+//-----------------------------------------------------------
+const dataInit = {
+  userName: "",
+  questionId,
+  isStart: false,
+  questionCounter: 0,
+  time: {
+    sec: 0,
+    min: 0,
+    hour: 0,
+  },
+};
+
 //-------------------------------------------------------------
 //-------------------------------------------------------------
 export function CtxProvider(props) {
@@ -32,13 +54,23 @@ export function CtxProvider(props) {
   const [isEnd, setIsEnd] = useState(false);
   const [finalTime, setFinalTime] = useState();
   const [isRestart, setIsRestart] = useState(false);
-  
+
   //-------------------------------------------------------------
 
-  //if local storage is empty the game has not begun yet
+  // set the initial game status
   useEffect(() => {
-    const gameStatus = localStorage.getItem("status");
-    !gameStatus ? setIsStart(false) : setIsStart(true);
+    const gameStatus = getLocaldata("status");
+
+    if (!gameStatus.isStart) {
+      gameStatus.userName === ""
+        ? setLocalData("status", dataInit)
+        : setLocalData("status", {
+            ...dataInit,
+            userName: gameStatus.userName,
+          });
+    }
+
+    !gameStatus.isStart ? setIsStart(false) : setIsStart(true);
   }, []);
 
   //-------------------------------------------------------------
@@ -47,17 +79,12 @@ export function CtxProvider(props) {
   const startGame = () => {
     setIsStart(true);
     setIsRestart(false);
+    const gameStatus = JSON.parse(localStorage.getItem("status"));
     localStorage.setItem(
       "status",
       JSON.stringify({
-        questionId,
-        isStart: "true",
-        questionCounter: 0,
-        time: {
-          sec: 0,
-          min: 0,
-          hour: 0,
-        },
+        ...gameStatus,
+        isStart: true,
       })
     );
   };
@@ -65,6 +92,9 @@ export function CtxProvider(props) {
   //-------------------------------------------------------------
   const handleTurn = () => {
     setIsEnd(true);
+    const gameStatus = getLocaldata("status");
+    // set the user name and time to firebase database
+    console.log(gameStatus);
   };
 
   //-------------------------------------------------------------
@@ -81,7 +111,12 @@ export function CtxProvider(props) {
     setIsEnd(false);
     setIsStart(false);
     setIsRestart(true);
-    window.localStorage.removeItem("status");
+    const gameStatus = getLocaldata("status");
+
+    setLocalData("status", {
+      ...dataInit,
+      userName: gameStatus.userName,
+    });
   };
 
   //-------------------------------------------------------------

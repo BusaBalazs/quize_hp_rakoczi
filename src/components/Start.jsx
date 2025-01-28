@@ -1,8 +1,9 @@
-import React, { useEffect, useRef } from "react";
-import { useGSAP } from "@gsap/react";
+import React, { useEffect, useRef} from "react";
+
 import { gsap } from "gsap/gsap-core";
 import { Cloudinary } from "@cloudinary/url-gen/index";
 
+import UserName from "./UserName.jsx";
 import { useCtx } from "../context/context";
 
 import classes from "./Start.module.css";
@@ -24,9 +25,20 @@ import {
 //-------------------------------------------------------
 const Start = () => {
   const videoRef = useRef();
+  const dialog = useRef();
 
+  
   //from context.jsx
-  const { startGame, isRestart } = useCtx();
+  const { startGame } = useCtx();
+
+  useEffect(() => {
+    const getLocalData = JSON.parse(localStorage.getItem("status"));
+    if (getLocalData.userName === "") {
+      dialog.current.open();
+    }
+  }, []);
+
+
 
   useEffect(() => {
     const loaded = () => {
@@ -99,59 +111,63 @@ const Start = () => {
   };
 
   return (
-    <section className={classes["start-page"]}>
-      <video
-        id="video"
-        ref={videoRef}
-        muted
-        playsInline={true}
-        className={classes.video}
-      >
-        <source
-          src={cld
-            .video("rakoczi_kert/qlpa6qizfzkfmbuvlwbp")
-            .quality("auto")
-            .toURL()}
-          type="video/mp4"
-        />
-      </video>
-      <div className={classes["btn-container"]}>
-        <button
-          id="start-btn"
-          className={classes["start-btn"]}
-          onClick={handleClick}
+    <>
+      <UserName ref={dialog} />
+
+      <section className={classes["start-page"]}>
+        <video
+          id="video"
+          ref={videoRef}
+          muted
+          playsInline={true}
+          className={classes.video}
         >
-          start
-        </button>
-        <img
-          src={imgWand}
-          className={`${classes["magic-wand-img"]} gsap-wand`}
-          alt="magic wand"
-        />
-      </div>
-      <div className={`${classes["flags-container"]}`}>
-        <img
-          className={`${classes["flag-img"]} gsap-flag`}
-          src={imgFlagBrown}
-          alt="brown flag"
-        />
-        <img
-          className={`${classes["flag-img"]} ${classes["flag-midle"]} gsap-flag`}
-          src={imgFlagBlue}
-          alt="blue flag"
-        />
-        <img
-          className={`${classes["flag-img"]} ${classes["flag-midle"]} gsap-flag`}
-          src={imgFlagRed}
-          alt="red flag"
-        />
-        <img
-          className={`${classes["flag-img"]} gsap-flag`}
-          src={imgFlagGreen}
-          alt="green flag"
-        />
-      </div>
-    </section>
+          <source
+            src={cld
+              .video("rakoczi_kert/qlpa6qizfzkfmbuvlwbp")
+              .quality("auto")
+              .toURL()}
+            type="video/mp4"
+          />
+        </video>
+        <div className={classes["btn-container"]}>
+          <button
+            id="start-btn"
+            className={classes["start-btn"]}
+            onClick={handleClick}
+          >
+            start
+          </button>
+          <img
+            src={imgWand}
+            className={`${classes["magic-wand-img"]} gsap-wand`}
+            alt="magic wand"
+          />
+        </div>
+        <div className={`${classes["flags-container"]}`}>
+          <img
+            className={`${classes["flag-img"]} gsap-flag`}
+            src={imgFlagBrown}
+            alt="brown flag"
+          />
+          <img
+            className={`${classes["flag-img"]} ${classes["flag-midle"]} gsap-flag`}
+            src={imgFlagBlue}
+            alt="blue flag"
+          />
+          <img
+            className={`${classes["flag-img"]} ${classes["flag-midle"]} gsap-flag`}
+            src={imgFlagRed}
+            alt="red flag"
+          />
+          <img
+            className={`${classes["flag-img"]} gsap-flag`}
+            src={imgFlagGreen}
+            alt="green flag"
+          />
+        </div>
+      </section>
+    </>
   );
 };
 

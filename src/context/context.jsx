@@ -60,7 +60,7 @@ export function CtxProvider(props) {
   // set the initial game status
   useEffect(() => {
     const gameStatus = getLocaldata("status");
-
+    setLocalData("status", dataInit)
     if (!gameStatus.isStart) {
       gameStatus.userName === ""
         ? setLocalData("status", dataInit)

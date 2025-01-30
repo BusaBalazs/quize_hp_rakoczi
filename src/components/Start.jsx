@@ -39,7 +39,6 @@ const Start = () => {
   }, []);
 
 
-
   useEffect(() => {
     const loaded = () => {
       if (videoRef.current) {

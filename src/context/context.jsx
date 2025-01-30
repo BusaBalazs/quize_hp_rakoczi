@@ -40,6 +40,7 @@ const setLocalData = (key, value) => {
 //-----------------------------------------------------------
 const dataInit = {
   userName: "",
+  uId: "",
   questionId,
   isStart: false,
   questionCounter: 0,
@@ -63,7 +64,7 @@ export function CtxProvider(props) {
   // set the initial game status
   useEffect(() => {
     const gameStatus = getLocaldata("status");
-    
+
     if (!gameStatus.isStart) {
       gameStatus.userName === ""
         ? setLocalData("status", dataInit)
@@ -119,6 +120,7 @@ export function CtxProvider(props) {
     setLocalData("status", {
       ...dataInit,
       userName: gameStatus.userName,
+      uId: gameStatus.uId,
     });
   };
 

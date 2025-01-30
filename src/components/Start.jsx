@@ -1,4 +1,4 @@
-import React, { useEffect, useRef} from "react";
+import React, { useEffect, useRef } from "react";
 
 import { gsap } from "gsap/gsap-core";
 import { Cloudinary } from "@cloudinary/url-gen/index";
@@ -27,7 +27,6 @@ const Start = () => {
   const videoRef = useRef();
   const dialog = useRef();
 
-  
   //from context.jsx
   const { startGame } = useCtx();
 
@@ -37,7 +36,6 @@ const Start = () => {
       dialog.current.open();
     }
   }, []);
-
 
   useEffect(() => {
     const loaded = () => {
@@ -103,10 +101,17 @@ const Start = () => {
   }, []);
 
   //-----------------------------------------------------------
-
+  
   //invoke the startGame function in context.jsx
   const handleClick = () => {
     startGame();
+  };
+  
+  //-----------------------------------------------------------
+
+  const handleUserNameBtn = () => {
+    dialog.current.open();
+    console.log("btn")
   };
 
   return (
@@ -165,6 +170,10 @@ const Start = () => {
             alt="green flag"
           />
         </div>
+
+        <button  onClick={handleUserNameBtn}>
+          Válassz nevet!
+        </button>
       </section>
     </>
   );

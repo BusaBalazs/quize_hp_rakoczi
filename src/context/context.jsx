@@ -16,6 +16,7 @@ const displayTime = (unit) => {
 };
 
 //-----------------------------------------------------------
+// radomize the array element - question Id
 const shuffleArray = (array) => {
   for (let i = array.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
@@ -27,6 +28,7 @@ const questionId = question.map((i) => i.id);
 shuffleArray(questionId);
 
 //-----------------------------------------------------------
+// local storage
 const getLocaldata = (key) => {
   return JSON.parse(localStorage.getItem(key));
 };
@@ -34,6 +36,7 @@ const getLocaldata = (key) => {
 const setLocalData = (key, value) => {
   localStorage.setItem(key, JSON.stringify(value));
 };
+
 //-----------------------------------------------------------
 const dataInit = {
   userName: "",
@@ -60,7 +63,7 @@ export function CtxProvider(props) {
   // set the initial game status
   useEffect(() => {
     const gameStatus = getLocaldata("status");
-    setLocalData("status", dataInit)
+    
     if (!gameStatus.isStart) {
       gameStatus.userName === ""
         ? setLocalData("status", dataInit)

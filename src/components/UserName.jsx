@@ -16,6 +16,7 @@ const UserName = forwardRef(({}, ref) => {
 
   const [warning, setWarning] = useState(false);
 
+  //-------------------------------------------------------
   useImperativeHandle(ref, () => {
     return {
       open() {
@@ -27,38 +28,43 @@ const UserName = forwardRef(({}, ref) => {
     };
   });
 
+  //-------------------------------------------------------
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     const getUserName = userName.current.value.trim();
 
-    if (getUserName !== "") {
-      const gameStatus = JSON.parse(localStorage.getItem("status"));
+    if (getUserName === "") {
+      setWarning(true);
+      return;
+    }
 
+    const gameStatus = JSON.parse(localStorage.getItem("status"));
+    localStorage.setItem(
+      "status",
+      JSON.stringify({
+        ...gameStatus,
+        userName: getUserName,
+      })
+    );
+
+    dialog.current.close();
+
+    try {
       await addDoc(collection(db, "users"), {
         user: getUserName,
       });
-
-      localStorage.setItem(
-        "status",
-        JSON.stringify({
-          ...gameStatus,
-          userName: getUserName,
-        })
-      );
-
-      dialog.current.close();
-    } else {
-      setWarning(true);
+    } catch (error) {
+      console.log(error);
     }
   };
+ 
 
-  // set warning to flase if the user typing name
+  //-------------------------------------------------------
+  // set warning to false if the user typing name
   const handleInput = () => {
     setWarning(false);
   };
-
-
   //-------------------------------------------------------
   return (
     <dialog ref={dialog}>

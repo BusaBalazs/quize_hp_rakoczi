@@ -3,11 +3,11 @@
   margin: auto;
   padding: 2.8rem 0.8rem;
   z-index: 2;
-  background: var(--color-bg);
+  background: url("../assets/blur_bg_2.jpg");
   background-size: cover;
   background-repeat: no-repeat;
   box-shadow: inset 0 4px 100px rgba(0, 0, 0, 0.25),
-    inset 0 0 50px rgba(107, 69, 51, 0.6);
+    inset 0 0 50px rgba(0, 0, 0, 0.8);
   border: 2px solid var(--color-orage-200);
   border-radius: var(--border-radius-m);
 }
@@ -32,4 +32,26 @@
   background-color: var(--color-orage-100);
   border: 1px solid var(--color-orage-200);
   box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+}
+
+.user-name-modal label {
+  display: inline-block;
+  margin-bottom: .5em;
+  text-align: left;
+  color: var(--color-white);
+}
+
+.user-input {
+  width: 90%;
+  font-size: var(--font-size-m);
+  padding: 0.3em;
+  background: rgb(231, 224, 199);
+  text-transform: capitalize;
+  box-shadow: 0 0 4px rgba(0, 0, 0, 0.397) inset,
+    0 0 15px rgba(0, 0, 0, 0.205) inset;
+}
+
+.user-input:focus {
+  outline: none;
+  border: none;
 }

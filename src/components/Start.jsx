@@ -101,17 +101,21 @@ const Start = () => {
   }, []);
 
   //-----------------------------------------------------------
-  
+
   //invoke the startGame function in context.jsx
   const handleClick = () => {
     startGame();
   };
-  
+
   //-----------------------------------------------------------
 
   const handleUserNameBtn = () => {
     dialog.current.open();
-    console.log("btn")
+    console.log("btn");
+  };
+
+  const handleScoreList = () => {
+    // open score list
   };
 
   return (
@@ -171,9 +175,20 @@ const Start = () => {
           />
         </div>
 
-        <button  onClick={handleUserNameBtn}>
-          Válassz nevet!
-        </button>
+        <div className={classes["function-btns-container"]}>
+          <button
+            className={classes["chose-username-btn"]}
+            onClick={handleScoreList}
+          >
+            Ranglista
+          </button>
+          <button
+            className={classes["chose-username-btn"]}
+            onClick={handleUserNameBtn}
+          >
+            Új nevet választok
+          </button>
+        </div>
       </section>
     </>
   );

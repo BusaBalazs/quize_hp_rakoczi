@@ -10,7 +10,7 @@ import { db } from "../firebase";
 
 import { v4 as uuidv4 } from "uuid";
 //-------------------------------------------------------
-import classes from "./UserName.module.css"
+import classes from "./UserName.module.css";
 //-------------------------------------------------------
 //-------------------------------------------------------
 const UserName = forwardRef(({}, ref) => {
@@ -74,8 +74,16 @@ const UserName = forwardRef(({}, ref) => {
   return (
     <dialog ref={dialog} className={classes["user-name-modal"]}>
       <form onSubmit={handleSubmit}>
-        <label htmlFor="userName">Válassz varázsló nevet?</label>
-        <input ref={userName} type="text" required onInput={handleInput} />
+        <div>
+          <label htmlFor="userName">Válassz varázsló nevet!</label>
+          <input
+            ref={userName}
+            type="text"
+            required
+            onInput={handleInput}
+            className={classes["user-input"]}
+          />
+        </div>
         <button type="submit">OK</button>
       </form>
     </dialog>

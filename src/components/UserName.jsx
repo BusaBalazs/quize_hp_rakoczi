@@ -74,8 +74,7 @@ const UserName = forwardRef(({}, ref) => {
   return (
     <dialog ref={dialog} className={classes["user-name-modal"]}>
       <form onSubmit={handleSubmit}>
-        <div>
-          <label htmlFor="userName">Válassz varázsló nevet!</label>
+        <div className={classes["input-container"]}>
           <input
             ref={userName}
             type="text"
@@ -83,6 +82,7 @@ const UserName = forwardRef(({}, ref) => {
             onInput={handleInput}
             className={classes["user-input"]}
           />
+          <label className={classes["label"]} htmlFor="userName">Varázsló nevem:</label>
         </div>
         <button type="submit">OK</button>
       </form>

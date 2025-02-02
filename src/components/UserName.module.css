@@ -3,7 +3,7 @@
   margin: auto;
   padding: 2.8rem 0.8rem;
   z-index: 2;
-  background: url("../assets/blur_bg_2.jpg");
+  background: var(--color-bg);
   background-size: cover;
   background-repeat: no-repeat;
   box-shadow: inset 0 4px 100px rgba(0, 0, 0, 0.25),
@@ -34,24 +34,36 @@
   box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
 }
 
-.user-name-modal label {
-  display: inline-block;
-  margin-bottom: .5em;
-  text-align: left;
-  color: var(--color-white);
+.input-container {
+  position: relative;
+  width: 90%;
+  height: 60px;
+}
+
+.label {
+  position: absolute;
+  left: 0;
+  padding: 0 1em;
+  color: var(--color-gray);
+  bottom: 12px;
+  z-index: 111;
+  transition: all 0.5s ease;
 }
 
 .user-input {
-  width: 90%;
+  width: 100%;
   font-size: var(--font-size-m);
   padding: 0.3em;
-  background: rgb(231, 224, 199);
+  background: transparent;
   text-transform: capitalize;
-  box-shadow: 0 0 4px rgba(0, 0, 0, 0.397) inset,
-    0 0 15px rgba(0, 0, 0, 0.205) inset;
+  border-bottom: 1px solid var(--color-gray);
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1) inset;
 }
 
 .user-input:focus {
   outline: none;
-  border: none;
+}
+
+.user-input:focus + .label {
+  transform: translateY(-45px);
 }

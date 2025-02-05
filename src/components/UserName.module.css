@@ -64,6 +64,7 @@
   outline: none;
 }
 
-.user-input:focus + .label {
+.user-input:focus + .label,
+.user-input:valid + .label {
   transform: translateY(-45px);
 }

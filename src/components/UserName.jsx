@@ -148,6 +148,7 @@ const UserName = forwardRef(({}, ref) => {
     setWarning(false);
     setForbiddenName(false);
   };
+  
   //-------------------------------------------------------
   return (
     <dialog ref={dialog} className={classes["user-name-modal"]}>

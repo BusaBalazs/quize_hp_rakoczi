@@ -4,6 +4,7 @@ import { gsap } from "gsap/gsap-core";
 import { Cloudinary } from "@cloudinary/url-gen/index";
 
 import UserName from "./UserName.jsx";
+import Leaderboard from "./Leaderboard.jsx";
 import { useCtx } from "../context/context";
 
 import classes from "./Start.module.css";
@@ -26,6 +27,7 @@ import {
 const Start = () => {
   const videoRef = useRef();
   const dialog = useRef();
+  const leaderboard = useRef();
 
   //from context.jsx
   const { startGame } = useCtx();
@@ -114,13 +116,14 @@ const Start = () => {
   };
 
   const handleScoreList = () => {
-    // open score list
+    leaderboard.current.open();
   };
 
+  //-----------------------------------------------------------
   return (
     <>
       <UserName ref={dialog} />
-
+      <Leaderboard ref={leaderboard} />
       <section className={classes["start-page"]}>
         <video
           id="video"

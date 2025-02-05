@@ -2,6 +2,9 @@ import { createContext, useContext, useState, useEffect } from "react";
 
 import { question } from "../lib/testData";
 
+import { db } from "../firebase";
+import { collection, doc, getDocs, updateDoc } from "firebase/firestore";
+
 //-------------------------------------------------------------
 const Ctx = createContext();
 
@@ -65,16 +68,18 @@ export function CtxProvider(props) {
   useEffect(() => {
     const gameStatus = getLocaldata("status");
 
-    if (!gameStatus.isStart) {
-      gameStatus.userName === ""
-        ? setLocalData("status", dataInit)
-        : setLocalData("status", {
-            ...dataInit,
-            userName: gameStatus.userName,
-          });
+    if (!gameStatus) {
+      setLocalData("status", dataInit);
     }
 
-    !gameStatus.isStart ? setIsStart(false) : setIsStart(true);
+    if (gameStatus && gameStatus.userName !== "") {
+      setLocalData("status", {
+        ...gameStatus,
+        userName: gameStatus.userName,
+      });
+    }
+
+    gameStatus && !gameStatus.isStart ? setIsStart(false) : setIsStart(true);
   }, []);
 
   //-------------------------------------------------------------
@@ -94,11 +99,50 @@ export function CtxProvider(props) {
   };
 
   //-------------------------------------------------------------
-  const handleTurn = () => {
+  const handleTurn = async () => {
     setIsEnd(true);
     const gameStatus = getLocaldata("status");
+
     // set the user name and time to firebase database
-    console.log(gameStatus);
+    //-----------------------------------------
+    // fetch the actual user data
+    const getDocId = async (collectionName) => {
+      try {
+        const querySnapshot = await getDocs(collection(db, collectionName));
+        const dataId = querySnapshot.docs.map((doc) => {
+          if (doc.data().uId === gameStatus.uId) {
+            return {
+              data: doc.data(),
+              id: doc.id,
+            };
+          }
+        });
+        const document = dataId.filter((id) => id);
+        return document[0];
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    const actualDocument = await getDocId("users");
+
+    //--------------------------------------------------------------------
+    // firestore update function
+    const updateData = async (collectionName, docId, newData) => {
+      try {
+        const docRef = doc(db, collectionName, docId);
+        await updateDoc(docRef, newData);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    const newDocument = {
+      ...actualDocument.data,
+      time: gameStatus.time,
+    };
+
+    updateData("users", actualDocument.id, newDocument);
   };
 
   //-------------------------------------------------------------

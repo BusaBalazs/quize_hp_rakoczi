@@ -32,7 +32,7 @@ const Start = () => {
 
   useEffect(() => {
     const getLocalData = JSON.parse(localStorage.getItem("status"));
-    if (getLocalData.userName === "") {
+    if (getLocalData && getLocalData.userName === "") {
       dialog.current.open();
     }
   }, []);
@@ -111,7 +111,6 @@ const Start = () => {
 
   const handleUserNameBtn = () => {
     dialog.current.open();
-    console.log("btn");
   };
 
   const handleScoreList = () => {

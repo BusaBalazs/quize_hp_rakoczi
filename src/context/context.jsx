@@ -136,10 +136,14 @@ export function CtxProvider(props) {
         console.log(error);
       }
     };
-
+    const milisecTimes =
+      (gameStatus.time.hour * 3600 +
+        gameStatus.time.min * 60 +
+        gameStatus.time.sec) *
+      1000;
     const newDocument = {
       ...actualDocument.data,
-      time: gameStatus.time,
+      time: milisecTimes,
     };
 
     updateData("users", actualDocument.id, newDocument);

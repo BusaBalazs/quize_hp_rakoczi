@@ -45,6 +45,18 @@ const Leaderboard = forwardRef(({}, ref) => {
     getDocId("users");
   }, []);
 
+  const leaderboardTime = leaderboardData.map((item) => {
+    
+    const users = {
+      user: item.userName,
+      time: item.time
+    };
+  
+
+    return users;
+  });
+  leaderboardTime.sort((a, b) => a.time - b.time);
+  console.log(leaderboardTime);
   //-------------------------------------------------------
   return (
     <dialog ref={dialog} className={classes["user-name-modal"]}>

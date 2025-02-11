@@ -61,7 +61,7 @@ const Modal = forwardRef(({ getScanId, modalText, actualQuestionNum }, ref) => {
   //-----------------------------------------------------------------
   return (
     <dialog
-      className={classes.modal}
+      className="modal"
       ref={dialog}
     >
       <div className={classes["modal-content"]}>

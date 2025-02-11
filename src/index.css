@@ -69,6 +69,9 @@ body {
   font-family: var(--font-regular);
 }
 
+/*-----------------------------------------------------------------------*/
+/*reader style-----------------------------------------------------------*/
+
 #reader button {
   padding: 0.6em 1em;
   margin: 2em 0 1em 0;
@@ -114,4 +117,25 @@ body {
   background-color: var(--color-orage-100);
   border: 1px solid var(--color-orage-200);
   box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+}
+
+/*-----------------------------------------------------------------------*/
+/*modal basic style-----------------------------------------------------------*/
+
+.modal {
+  width: min(85%, 550px);
+  margin: auto;
+  padding: 2.8rem 0.8rem;
+  z-index: 2;
+  background: var(--color-bg);
+  background-size: cover;
+  background-repeat: no-repeat;
+  box-shadow: inset 0 4px 100px rgba(0, 0, 0, 0.25),
+    inset 0 0 50px rgba(107, 69, 51, 0.6);
+  border: 2px solid var(--color-orage-200);
+  border-radius: var(--border-radius-l);
+}
+
+.modal::backdrop {
+  background-color: rgba(22, 29, 24, 0.8);
 }

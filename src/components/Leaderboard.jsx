@@ -12,6 +12,11 @@ import { db } from "../firebase";
 
 import classes from "./Leaderboard.module.css";
 
+//calculate the user's time in milisec
+const milisecTimes = (hour, min, sec) => {
+  return (hour * 3600 + min * 60 + sec) * 1000;
+};
+
 //---------------------------------------------------------
 //---------------------------------------------------------
 const Leaderboard = forwardRef(({}, ref) => {
@@ -31,12 +36,28 @@ const Leaderboard = forwardRef(({}, ref) => {
   });
 
   useEffect(() => {
-    // fetch the actual user data
+    // fetch the actual users data
     const getDocId = async (collectionName) => {
       try {
         const querySnapshot = await getDocs(collection(db, collectionName));
-        const actualDocument = querySnapshot.docs.map((doc) => doc.data());
-        setLeaderboardData(actualDocument);
+        const documents = querySnapshot.docs.map((doc) => doc.data());
+
+        // get the user name and the time
+        const leaderboardUsers = documents.map((item) => {
+          const users = {
+            user: item.userName,
+            time: item.time,
+            milisec: milisecTimes(item.time.hour, item.time.min, item.time.sec),
+            uId: item.uId,
+          };
+
+          return users;
+        });
+
+        // sort data by time
+        leaderboardUsers.sort((a, b) => a.milisec - b.milisec);
+
+        setLeaderboardData(leaderboardUsers);
       } catch (error) {
         console.log(error);
       }
@@ -45,22 +66,21 @@ const Leaderboard = forwardRef(({}, ref) => {
     getDocId("users");
   }, []);
 
-  const leaderboardTime = leaderboardData.map((item) => {
-    
-    const users = {
-      user: item.userName,
-      time: item.time
-    };
-  
-
-    return users;
-  });
-  leaderboardTime.sort((a, b) => a.time - b.time);
-  console.log(leaderboardTime);
   //-------------------------------------------------------
   return (
-    <dialog ref={dialog} className={classes["user-name-modal"]}>
-      <section>here is the leaderboard</section>
+    <dialog ref={dialog} className={`modal`}>
+      <section>
+        <ul>
+          {leaderboardData.map((item) => (
+            <li key={item.uId}>
+              <div>
+                <span>{item.user} - </span>
+                <span>{`${item.time.hour}:${item.time.min}:${item.time.sec}`}</span>
+              </div>
+            </li>
+          ))}
+        </ul>
+      </section>
     </dialog>
   );
 });

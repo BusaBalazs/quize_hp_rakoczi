@@ -136,10 +136,12 @@ const Questions = () => {
 
   //--------------------------------------------------------------
   
+  console.log(questionId[questionNum])
   // check the QR code, and set the next question if the code is right
   const handleGetScanId = (result) => {
+    console.log(result)
     dialog.current.close();
-    if (result === questionId[questionNum]) {
+    if (parseInt(result) === questionId[questionNum]) {
       try {
         const getStatus = getLocaldata("status");
         let getCounter = getStatus.questionCounter;

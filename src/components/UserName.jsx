@@ -151,7 +151,7 @@ const UserName = forwardRef(({}, ref) => {
   
   //-------------------------------------------------------
   return (
-    <dialog ref={dialog} className={classes["user-name-modal"]}>
+    <dialog ref={dialog} className={`${classes["user-name-modal"]} modal`}>
       <form onSubmit={handleSubmit}>
         <div className={classes["input-container"]}>
           <input

@@ -65,7 +65,7 @@ const Leaderboard = forwardRef(({}, ref) => {
 
     getDocId("users");
   }, []);
-
+  console.log(leaderboardData)
   //-------------------------------------------------------
   return (
     <dialog ref={dialog} className={`modal`}>

@@ -82,7 +82,6 @@ const Questions = () => {
     setQuestionId(getStatus.questionId);
   }, []);
 
-
   //--------------------------------------------------------------
 
   useLayoutEffect(() => {
@@ -135,11 +134,9 @@ const Questions = () => {
   };
 
   //--------------------------------------------------------------
-  
-  console.log(questionId[questionNum])
+
   // check the QR code, and set the next question if the code is right
   const handleGetScanId = (result) => {
-    console.log(result)
     dialog.current.close();
     if (parseInt(result) === questionId[questionNum]) {
       try {
@@ -237,12 +234,12 @@ const Questions = () => {
             </QuestionItem>
           ))}
         </ul>
-
         <Process
           numOfQuestion={questionNum}
           numOfAllQuestion={question.length}
-        />
+          />
 
+          <div className={classes["test-div"]}></div>
         <div className={classes.test}>
           <button onClick={handleTest}>test btn</button>
         </div>

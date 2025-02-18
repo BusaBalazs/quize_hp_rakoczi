@@ -105,4 +105,13 @@
 .test button {
   padding: 0.2em 1em;
 }
+
+.test-div {
+  width: 25px;
+  height: 25px;
+  background-color: transparent;
+  border-radius: 50%;
+  border-right: 3px solid orange;
+  transform: rotate(45deg);
+}
 /***********************************/

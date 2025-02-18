@@ -59,6 +59,8 @@ const forbiddenUserName = [
   "megbassza",
   "megbasza",
   "baszik",
+  "baszo",
+  "anyabaszo",
   "lofasz",
   "hulyepicsa",
   "segg",

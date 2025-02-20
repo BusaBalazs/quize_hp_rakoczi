@@ -6,6 +6,9 @@ import React, {
   useEffect,
 } from "react";
 
+import downloadjs from "downloadjs";
+import html2canvas from "html2canvas";
+
 //-----------------------------------------------------------------
 
 import Reader from "./Reader.jsx";
@@ -58,6 +61,15 @@ const Modal = forwardRef(({ getScanId, modalText, actualQuestionNum }, ref) => {
     setId(getStatus.questionId);
   }, []);
  
+  //-----------------------------------------------------------------
+  const handleCapture = async () => {
+    const dialog = document.querySelector(".modal");
+    console.log(dialog)
+    const canvas = await html2canvas(dialog);
+    const dataURL = canvas.toDataURL("image/png")
+    downloadjs(dataURL, "potter.png", "image/png")
+  }
+  
   //-----------------------------------------------------------------
   return (
     <dialog
@@ -113,6 +125,7 @@ const Modal = forwardRef(({ getScanId, modalText, actualQuestionNum }, ref) => {
             <button onClick={handleRestart} className={classes["restart-btn"]}>
               Újra játszok
             </button>
+            <button onClick={handleCapture}>pic</button>
           </>
         )}
       </div>

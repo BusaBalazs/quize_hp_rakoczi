@@ -1,7 +1,6 @@
 import React, { useEffect, useRef } from "react";
 
 import { gsap } from "gsap/gsap-core";
-import { Cloudinary } from "@cloudinary/url-gen/index";
 
 import UserName from "./UserName.jsx";
 import Leaderboard from "./Leaderboard.jsx";
@@ -9,23 +8,11 @@ import { useCtx } from "../context/context";
 
 import classes from "./Start.module.css";
 //----------------------------------------------------------
-const cld = new Cloudinary({
-  cloud: {
-    cloudName: "dironarnd",
-  },
-});
 
-import {
-  imgWand,
-  imgFlagBlue,
-  imgFlagBrown,
-  imgFlagGreen,
-  imgFlagRed,
-} from "../assets/index.js";
+import { imgWand, imgSnitch } from "../assets/index.js";
 //-------------------------------------------------------
 //-------------------------------------------------------
 const Start = () => {
-  const videoRef = useRef();
   const dialog = useRef();
   const leaderboard = useRef();
 
@@ -41,54 +28,41 @@ const Start = () => {
 
   useEffect(() => {
     const loaded = () => {
-      if (videoRef.current) {
-        gsap.to(".gsap-wand", {
-          x: 0,
-          scale: 1,
-          rotateY: 0,
-          rotateZ: 0,
-          duration: 1.5,
-          ease: "back.inOut",
-        });
-
-        gsap.fromTo(
-          "#start-btn",
-          {
-            scale: 0.5,
-            opacity: 0,
-          },
-          {
-            scale: 1,
-            opacity: 1,
-            ease: "expo.out",
-            duration: 1.5,
-            delay: 0.5,
-          }
-        );
-
-        gsap.fromTo(
-          ".gsap-flag",
-          {
-            y: 80,
-            opacity: 0,
-          },
-          {
-            y: 0,
-            opacity: 1,
-            delay: 1,
-            stagger: 0.2,
-            ease: "back.out",
-            duration: 1,
-          }
-        );
-
-        videoRef.current.play();
-
-        gsap.to("#video", {
+      gsap.fromTo(
+        "#start-btn",
+        {
+          scale: 0.5,
           opacity: 0,
-          delay: 1.5,
-        });
-      }
+        },
+        {
+          scale: 1,
+          opacity: 1,
+          ease: "expo.out",
+          duration: 1,
+          delay: 0.3,
+        }
+      );
+
+      gsap.fromTo(
+        "#snitch",
+        { scale: 0.5, opacity: 0, x: -50 },
+        { scale: 1, opacity: 1, ease: "back.out", delay: 0.5, x: 0 }
+      );
+
+      gsap.fromTo(
+        ".btn-gsap",
+        {
+          x: -50,
+          opacity: 0,
+        },
+        {
+          x: 0,
+          opacity: 1,
+          stagger: 0.2,
+          ease: "back.out",
+          delay: 0.6,
+        }
+      );
     };
 
     if (document.readyState === "complete") {
@@ -125,71 +99,44 @@ const Start = () => {
       <UserName ref={dialog} />
       <Leaderboard ref={leaderboard} />
       <section className={classes["start-page"]}>
-        <video
-          id="video"
-          ref={videoRef}
-          muted
-          playsInline={true}
-          className={classes.video}
-        >
-          <source
-            src={cld
-              .video("rakoczi_kert/qlpa6qizfzkfmbuvlwbp")
-              .quality("auto")
-              .toURL()}
-            type="video/mp4"
-          />
-        </video>
-        <div className={classes["btn-container"]}>
-          <button
-            id="start-btn"
-            className={classes["start-btn"]}
-            onClick={handleClick}
-          >
+        <div onClick={handleClick} className={classes["btn-container"]}>
+          <button id="start-btn" className={classes["start-btn"]}>
             start
           </button>
           <img
-            src={imgWand}
-            className={`${classes["magic-wand-img"]} gsap-wand`}
-            alt="magic wand"
+            src={imgSnitch}
+            className={`${classes["snitch-img"]}`}
+            alt="gold snitch"
+            id="snitch"
           />
         </div>
-        <div className={`${classes["flags-container"]}`}>
-          <img
-            className={`${classes["flag-img"]} gsap-flag`}
-            src={imgFlagBrown}
-            alt="brown flag"
-          />
-          <img
-            className={`${classes["flag-img"]} ${classes["flag-midle"]} gsap-flag`}
-            src={imgFlagBlue}
-            alt="blue flag"
-          />
-          <img
-            className={`${classes["flag-img"]} ${classes["flag-midle"]} gsap-flag`}
-            src={imgFlagRed}
-            alt="red flag"
-          />
-          <img
-            className={`${classes["flag-img"]} gsap-flag`}
-            src={imgFlagGreen}
-            alt="green flag"
-          />
-        </div>
-
         <div className={classes["function-btns-container"]}>
-          <button
-            className={classes["chose-username-btn"]}
-            onClick={handleScoreList}
-          >
-            Ranglista
-          </button>
-          <button
-            className={classes["chose-username-btn"]}
-            onClick={handleUserNameBtn}
-          >
-            Új nevet választok
-          </button>
+          <div className={`${classes["function-btn"]} btn-gsap`}>
+            <button
+              className={classes["chose-username-btn"]}
+              onClick={handleScoreList}
+            >
+              Ranglista
+            </button>
+            <img
+              src={imgWand}
+              className={`${classes["magic-wand-img"]}`}
+              alt="magic wand"
+            />
+          </div>
+          <div className={`${classes["function-btn"]} btn-gsap`}>
+            <button
+              className={classes["chose-username-btn"]}
+              onClick={handleUserNameBtn}
+            >
+              Új nevet választok
+            </button>
+            <img
+              src={imgWand}
+              className={`${classes["magic-wand-img"]}`}
+              alt="magic wand"
+            />
+          </div>
         </div>
       </section>
     </>

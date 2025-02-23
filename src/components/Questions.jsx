@@ -16,7 +16,7 @@ import classes from "./Questions.module.css";
 
 import { question } from "../lib/testData";
 import { ANSWER_FEEDBACK, QR_FEEDBACK } from "../lib/constatnt";
-import nimbusImg from "../assets/nimbusz_2000.png";
+import { imgNimbus as nimbusImg} from "../assets"; 
 
 //-----------------------------------------------------------------
 

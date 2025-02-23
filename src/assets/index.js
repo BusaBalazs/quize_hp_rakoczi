@@ -1,8 +1,8 @@
-import imgWand from "./FF23FF99.png";
-import imgFlagBrown from "./Houses_flag_brown.png";
-import imgFlagBlue from "./Houses_flag_blue.png";
-import imgFlagRed from "./Houses_flag_red.png";
-import imgFlagGreen from "./Houses_flag_green.png";
+import imgWand from "./wand-min.png";
+import imgNimbus from "./nimbusz_2000-min.png";
 import mapImg from "./rakoczi_map.jpg";
+import imgSnitch from "./snitch-min.png";
 
-export { imgWand, imgFlagBrown, imgFlagBlue, imgFlagRed, imgFlagGreen, mapImg };
+//----------------------------------------------------
+
+export { imgWand, mapImg, imgNimbus, imgSnitch };

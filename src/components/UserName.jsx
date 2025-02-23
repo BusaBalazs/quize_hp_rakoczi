@@ -10,6 +10,7 @@ import { db } from "../firebase";
 
 import { v4 as uuidv4 } from "uuid";
 //-------------------------------------------------------
+import { imgWand } from "../assets";
 import classes from "./UserName.module.css";
 
 //-------------------------------------------------------
@@ -150,24 +151,35 @@ const UserName = forwardRef(({}, ref) => {
     setWarning(false);
     setForbiddenName(false);
   };
-  
+
+  //-------------------------------------------------------
+  const handleCancel = () => {
+    dialog.current.close();
+  }
+
   //-------------------------------------------------------
   return (
     <dialog ref={dialog} className={`${classes["user-name-modal"]} modal`}>
+      <div className="header-contaier">
+        <h2>varázsló név</h2>
+        <img src={imgWand} className="magic-wand-img" alt="magic wand" />
+      </div>
       <form onSubmit={handleSubmit}>
-        <div className={classes["input-container"]}>
-          <input
-            ref={userName}
-            type="text"
-            required
-            onInput={handleInput}
-            className={classes["user-input"]}
-          />
-          <label className={classes["label"]} htmlFor="userName">
-            Varázsló nevem:
-          </label>
+        <input
+          ref={userName}
+          type="text"
+          required
+          onInput={handleInput}
+          className={classes["user-input"]}
+        />
+        <div className={classes["btns-container"]}>
+          <button className={classes["btn-cancel"]} type="button" onClick={handleCancel}>
+            Vissza
+          </button>
+          <button className="btn" type="submit">
+            OK
+          </button>
         </div>
-        <button type="submit">OK</button>
       </form>
     </dialog>
   );

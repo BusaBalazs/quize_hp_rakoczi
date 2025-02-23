@@ -1,20 +1,3 @@
-.modal {
-  width: min(85%, 550px);
-  margin: auto;
-  padding: 2.8rem 0.8rem;
-  z-index: 2;
-  background: var(--color-bg);
-  background-size: cover;
-  background-repeat: no-repeat;
-  box-shadow: inset 0 4px 100px rgba(0, 0, 0, 0.25),
-    inset 0 0 50px rgba(107, 69, 51, 0.6);
-  border: 2px solid var(--color-orage-200);
-  border-radius: var(--border-radius-l);
-}
-
-.modal::backdrop {
-  background-color: rgba(22, 29, 24, 0.8);
-}
 
 .scan-btn,
 .modal h2,

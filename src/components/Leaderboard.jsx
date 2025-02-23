@@ -11,7 +11,8 @@ import { db } from "../firebase";
 //---------------------------------------------------------
 
 import classes from "./Leaderboard.module.css";
-
+import { imgWand } from "../assets";
+//---------------------------------------------------------
 //calculate the user's time in milisec
 const milisecTimes = (hour, min, sec) => {
   return (hour * 3600 + min * 60 + sec) * 1000;
@@ -65,21 +66,37 @@ const Leaderboard = forwardRef(({}, ref) => {
 
     getDocId("users");
   }, []);
-  
+
+  const handleClose = () => dialog.current.close();
+
   //-------------------------------------------------------
   return (
     <dialog ref={dialog} className={`modal`}>
       <section>
-        <ul>
-          {leaderboardData.map((item) => (
+        <div className="header-contaier">
+          <h2>ranglista</h2>
+          <img
+            src={imgWand}
+            className="magic-wand-img"
+            alt="magic wand"
+          />
+        </div>
+        <ul className={classes["users-list"]}>
+          {leaderboardData.map((item, index) => (
             <li key={item.uId}>
-              <div>
-                <span>{item.user} - </span>
+              <div className={classes["list-item"]}>
+                <div className={classes["user"]}>
+                  <span>{index + 1}.</span>
+                  <span>{item.user}</span>
+                </div>
                 <span>{`${item.time.hour}:${item.time.min}:${item.time.sec}`}</span>
               </div>
             </li>
           ))}
         </ul>
+        <button className={"btn"} onClick={handleClose}>
+          vissza
+        </button>
       </section>
     </dialog>
   );

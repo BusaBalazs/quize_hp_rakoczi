@@ -24,9 +24,9 @@ const Process = ({ numOfQuestion, numOfAllQuestion }) => {
   //--------------------------------------------------------------
   return (
     <section className={classes["process-container"]}>
-      <div className={classes["timer-container"]}>
-        <Timer className={classes["timer-display"]} isEnd={isEnd} />
-      </div>
+      
+      <Timer className={classes["timer-display"]} isEnd={isEnd} />
+
       <div className={classes["process-indicator-container"]}>
         <p className={classes["num-of-question"]}>{`${
           numOfQuestion + 1

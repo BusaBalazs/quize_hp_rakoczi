@@ -10,7 +10,7 @@
   font-size: var(--font-size-m);
   padding: 0.3em;
   background: rgba(255, 255, 255, 0.3);
-  text-transform: capitalize;
+  text-transform: uppercase;
   border-left: 2px solid var(--color-white);
   border-right: 2px solid var(--color-white);
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.1) inset;
@@ -27,4 +27,8 @@
   font-size: var(--font-size-m);
   margin-right: 3em;
   background: transparent;
+}
+
+.forbidden-alert {
+  color: rgb(167, 2, 2);
 }

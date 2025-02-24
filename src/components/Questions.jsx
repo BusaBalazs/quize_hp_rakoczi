@@ -239,9 +239,8 @@ const Questions = () => {
           numOfAllQuestion={question.length}
           />
 
-          <div className={classes["test-div"]}></div>
         <div className={classes.test}>
-          <button onClick={handleTest}>test btn</button>
+          <button onClick={handleTest}>{questionId[questionNum]}</button>
         </div>
       </section>
     </>

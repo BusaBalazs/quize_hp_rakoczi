@@ -58,7 +58,22 @@ const Leaderboard = forwardRef(({}, ref) => {
         // sort data by time
         leaderboardUsers.sort((a, b) => a.milisec - b.milisec);
 
-        setLeaderboardData(leaderboardUsers);
+        let topTen = [];
+        for (let i = 0; i <= 9; i++) {
+          topTen.push(
+            <li key={leaderboardUsers[i].uId}>
+              <div className={classes["list-item"]}>
+                <div className={classes["user"]}>
+                  <span>{i + 1}.</span>
+                  <span>{leaderboardUsers[i].user}</span>
+                </div>
+                <span>{`${leaderboardUsers[i].time.hour}:${leaderboardUsers[i].time.min}:${leaderboardUsers[i].time.sec}`}</span>
+              </div>
+            </li>
+          );
+        }
+
+        setLeaderboardData(topTen);
       } catch (error) {
         console.log(error);
       }
@@ -67,6 +82,9 @@ const Leaderboard = forwardRef(({}, ref) => {
     getDocId("users");
   }, []);
 
+  //-------------------------------------------------------
+
+  //------------------------------------------------------
   const handleClose = () => dialog.current.close();
 
   //-------------------------------------------------------
@@ -75,26 +93,13 @@ const Leaderboard = forwardRef(({}, ref) => {
       <section>
         <div className="header-contaier">
           <h2>ranglista</h2>
-          <img
-            src={imgWand}
-            className="magic-wand-img"
-            alt="magic wand"
-          />
+          <img src={imgWand} className="magic-wand-img" alt="magic wand" />
         </div>
-        <ul className={classes["users-list"]}>
-          {leaderboardData.map((item, index) => (
-            <li key={item.uId}>
-              <div className={classes["list-item"]}>
-                <div className={classes["user"]}>
-                  <span>{index + 1}.</span>
-                  <span>{item.user}</span>
-                </div>
-                <span>{`${item.time.hour}:${item.time.min}:${item.time.sec}`}</span>
-              </div>
-            </li>
-          ))}
-        </ul>
-        <button className={"btn"} onClick={handleClose}>
+        <ul className={classes["users-list"]}>{leaderboardData}</ul>
+        <button
+          className={`${classes["leader-board-btn"]} btn`}
+          onClick={handleClose}
+        >
           vissza
         </button>
       </section>

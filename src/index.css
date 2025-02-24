@@ -38,8 +38,10 @@
   --color-orage-200: rgba(152, 127, 89, 1);
   --color-gray: rgb(42, 42, 42);
   --color-white: rgb(246, 246, 246);
+  --color-white-alpha: rgba(246, 246, 246, 0.6);
   --color-white-alpha-shadow: rgba(246, 246, 246, 0.25);
   --color-black-bg: rgb(0, 0, 0, 0.8);
+  --color-blue-200: rgb(0, 135, 219);
 
   --color-bg: linear-gradient(
     130deg,
@@ -117,12 +119,15 @@ img {
   content: "Kamera Engedélyezése";
   visibility: visible;
   display: block;
-  padding: 0.6em 1em;
-  border-radius: var(--border-radius-xl);
+  font-size: var(--font-size-m);
+  padding: 0.5em 1.1em;
+  margin-top: 2em;
   text-transform: uppercase;
-  background-color: var(--color-orage-100);
-  border: 1px solid var(--color-orage-200);
-  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+  color: var(--color-orage-100);
+  background-color: var(--color-black-bg);
+  border-radius: var(--border-radius-s);
+  border-left: 2px solid var(--color-orage-100);
+  border-right: 2px solid var(--color-orage-100);
 }
 
 /*-----------------------------------------------------------------------*/
@@ -131,7 +136,7 @@ img {
 .modal {
   width: min(85%, 550px);
   margin: auto;
-  padding: 2.8rem 0;
+  padding: 1rem 0;
   z-index: 2;
   background: url("./assets/pop_up_bg-min.png");
   background-size: cover;
@@ -146,8 +151,8 @@ img {
   background-color: rgba(22, 29, 24, 0.8);
 }
 
-.btn {
-  font-size: var(--font-size-m);
+.btn, .btn-big {
+  font-size: 1.3rem;
   padding: 0.2em 1.1em;
   margin-top: 2em;
   text-transform: uppercase;
@@ -158,13 +163,17 @@ img {
   border-right: 2px solid var(--color-orage-100);
 }
 
+.btn-big {
+  padding: .5em 1.1em;
+}
+
 .header-contaier {
-  margin-bottom: 2em;
+  margin-bottom: 1em;
   padding: .8em;
 }
 
 .header-contaier h2 {
-  font-size: 1.8rem;
+  font-size: 1.7rem;
   font-family: var(--font-title);
   font-weight: 900;
   letter-spacing: 0.1em;

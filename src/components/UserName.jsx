@@ -5,8 +5,7 @@ import React, {
   useState,
 } from "react";
 
-import { collection, addDoc, Timestamp } from "firebase/firestore";
-import { db } from "../firebase";
+import { useCtx } from "../context/context";
 
 import { v4 as uuidv4 } from "uuid";
 //-------------------------------------------------------
@@ -15,9 +14,8 @@ import classes from "./UserName.module.css";
 
 //-------------------------------------------------------
 // user name checking function
-//
 const userNameIsOk = (str, forbiddenName) => {
-  // check if devided the forbidden word
+  // check the forbidden word
   let string = str
     .normalize("NFD")
     .replace(/[\u0300-\u036f\s+]/g, "")
@@ -76,6 +74,9 @@ const forbiddenUserName = [
   "elmeszteapicsaba",
   "geci",
   "gecilada",
+  "geciputtony",
+  "gecipotter",
+  "geciharrypotter",
 ];
 
 //-------------------------------------------------------
@@ -87,6 +88,7 @@ const UserName = forwardRef(({}, ref) => {
   const [warning, setWarning] = useState(false);
   const [forbiddenName, setForbiddenName] = useState(false);
 
+  const { welcomeUser } = useCtx();
   //-------------------------------------------------------
   useImperativeHandle(ref, () => {
     return {
@@ -111,13 +113,14 @@ const UserName = forwardRef(({}, ref) => {
     );
 
     if (checkUserName.byChr || checkUserName.byWord.length !== 0) {
-      console.log("running");
       setForbiddenName(true);
       return;
     }
+
+    //----------------------------------------------------
     // set user name if it is ok
     const getUserName = userName.current.value;
-
+    welcomeUser(getUserName);
     //-------------------------------------------------------------
     // save data to local storage
     const gameStatus = JSON.parse(localStorage.getItem("status"));
@@ -131,18 +134,6 @@ const UserName = forwardRef(({}, ref) => {
     );
 
     dialog.current.close();
-
-    //-------------------------------------------------------------
-    // save data to firestore
-    try {
-      await addDoc(collection(db, "users"), {
-        userName: getUserName,
-        uId: userId,
-        createdAt: Timestamp.now(),
-      });
-    } catch (error) {
-      console.log(error);
-    }
   };
 
   //-------------------------------------------------------
@@ -155,7 +146,7 @@ const UserName = forwardRef(({}, ref) => {
   //-------------------------------------------------------
   const handleCancel = () => {
     dialog.current.close();
-  }
+  };
 
   //-------------------------------------------------------
   return (
@@ -164,6 +155,9 @@ const UserName = forwardRef(({}, ref) => {
         <h2>varázsló név</h2>
         <img src={imgWand} className="magic-wand-img" alt="magic wand" />
       </div>
+      {forbiddenName && (
+        <p className={classes["forbidden-alert"]}>Válassz másik nevet!</p>
+      )}
       <form onSubmit={handleSubmit}>
         <input
           ref={userName}
@@ -173,7 +167,11 @@ const UserName = forwardRef(({}, ref) => {
           className={classes["user-input"]}
         />
         <div className={classes["btns-container"]}>
-          <button className={classes["btn-cancel"]} type="button" onClick={handleCancel}>
+          <button
+            className={classes["btn-cancel"]}
+            type="button"
+            onClick={handleCancel}
+          >
             Vissza
           </button>
           <button className="btn" type="submit">

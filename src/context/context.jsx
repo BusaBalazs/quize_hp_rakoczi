@@ -3,7 +3,7 @@ import { createContext, useContext, useState, useEffect } from "react";
 import { question } from "../lib/testData";
 
 import { db } from "../firebase";
-import { collection, doc, getDocs, updateDoc } from "firebase/firestore";
+import { collection, doc, getDocs, updateDoc, addDoc, Timestamp } from "firebase/firestore";
 
 //-------------------------------------------------------------
 const Ctx = createContext();
@@ -31,7 +31,7 @@ const questionId = question.map((i) => i.id);
 shuffleArray(questionId);
 
 //-----------------------------------------------------------
-// local storage
+//local storage functions
 const getLocaldata = (key) => {
   return JSON.parse(localStorage.getItem(key));
 };
@@ -61,9 +61,15 @@ export function CtxProvider(props) {
   const [isEnd, setIsEnd] = useState(false);
   const [finalTime, setFinalTime] = useState();
   const [isRestart, setIsRestart] = useState(false);
+  const [userName, setUserName] = useState();
 
   //-------------------------------------------------------------
-
+  //display correct name on start page if the user change the name
+  const welcomeUser = (user) => {
+    setUserName(user);
+  };
+  
+  //-------------------------------------------------------------
   // set the initial game status
   useEffect(() => {
     const gameStatus = getLocaldata("status");
@@ -73,6 +79,7 @@ export function CtxProvider(props) {
     }
 
     if (gameStatus && gameStatus.userName !== "") {
+      setUserName(gameStatus.userName);
       setLocalData("status", {
         ...gameStatus,
         userName: gameStatus.userName,
@@ -83,19 +90,33 @@ export function CtxProvider(props) {
   }, []);
 
   //-------------------------------------------------------------
-
-  //set the initial local storage when click the Start button
-  const startGame = () => {
+  //set the initial data when click the Start button
+  const startGame = async () => {
     setIsStart(true);
     setIsRestart(false);
     const gameStatus = JSON.parse(localStorage.getItem("status"));
-    localStorage.setItem(
-      "status",
-      JSON.stringify({
-        ...gameStatus,
-        isStart: true,
-      })
-    );
+
+    if (gameStatus) {
+      localStorage.setItem(
+        "status",
+        JSON.stringify({
+          ...gameStatus,
+          isStart: true,
+        })
+      );
+
+      //-------------------------------------------------------------
+      // save data to firestore
+      try {
+        await addDoc(collection(db, "users"), {
+          userName: gameStatus.userName.toUpperCase(),
+          uId: gameStatus.uId,
+          createdAt: Timestamp.now(),
+        });
+      } catch (error) {
+        console.log(error);
+      }
+    }
   };
 
   //-------------------------------------------------------------
@@ -103,8 +124,8 @@ export function CtxProvider(props) {
     setIsEnd(true);
     const gameStatus = getLocaldata("status");
 
-    // set the user name and time to firebase database
     //-----------------------------------------
+    // set the user name and time to firebase database
     // fetch the actual user data
     const getDocId = async (collectionName) => {
       try {
@@ -136,7 +157,7 @@ export function CtxProvider(props) {
         console.log(error);
       }
     };
-   
+
     const newDocument = {
       ...actualDocument.data,
       time: gameStatus.time,
@@ -146,6 +167,7 @@ export function CtxProvider(props) {
   };
 
   //-------------------------------------------------------------
+  //get time
   const getFinalTime = (time) => {
     setFinalTime(
       `${displayTime(time.hour)}:${displayTime(time.min)}:${displayTime(
@@ -161,6 +183,7 @@ export function CtxProvider(props) {
     setIsRestart(true);
     const gameStatus = getLocaldata("status");
 
+    setUserName(gameStatus.userName);
     setLocalData("status", {
       ...dataInit,
       userName: gameStatus.userName,
@@ -178,6 +201,8 @@ export function CtxProvider(props) {
     finalTime,
     restart,
     isRestart,
+    userName,
+    welcomeUser,
   };
   return <Ctx.Provider value={value}>{props.children}</Ctx.Provider>;
 }

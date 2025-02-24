@@ -60,36 +60,33 @@ const Modal = forwardRef(({ getScanId, modalText, actualQuestionNum }, ref) => {
     const getStatus = JSON.parse(localStorage.getItem("status"));
     setId(getStatus.questionId);
   }, []);
- 
+
   //-----------------------------------------------------------------
   const handleCapture = async () => {
     const dialog = document.querySelector(".modal");
-    console.log(dialog)
+    console.log(dialog);
     const canvas = await html2canvas(dialog);
-    const dataURL = canvas.toDataURL("image/png")
-    downloadjs(dataURL, "potter.png", "image/png")
-  }
-  
+    const dataURL = canvas.toDataURL("image/png");
+    downloadjs(dataURL, "potter.png", "image/png");
+  };
+
   //-----------------------------------------------------------------
   return (
-    <dialog
-      className="modal"
-      ref={dialog}
-    >
+    <dialog className="modal" ref={dialog}>
       <div className={classes["modal-content"]}>
         {isScan && <Reader scanId={handleScanId} />}
         {!isScan && !isEnd && (
           <>
             <div>
-              <h2 className={!modalText.qr ? classes.alert : null}>
+              <h2
+                className={`${classes["code-scan-modal-title"]} ${
+                  !modalText.qr ? classes.alert : null
+                }`}
+              >
                 {modalText.title}
               </h2>
 
-              <img
-                src={imgWand}
-                className={classes["magic-wand-img"]}
-                alt="magic wand"
-              />
+              <img src={imgWand} className="magic-wand-img" alt="magic wand" />
 
               <p
                 className={`${!modalText.qr ? classes.alert : null} ${
@@ -100,11 +97,11 @@ const Modal = forwardRef(({ getScanId, modalText, actualQuestionNum }, ref) => {
               </p>
               <p>Amit a {id && nextQrPlace[id[actualQuestionNum]]} találsz</p>
             </div>
-            <span className={classes["map-img-container"]}>
+            <div className={classes["map-img-container"]}>
               <img src={mapImg} alt="map" className={classes["map-img"]} />
-            </span>
+            </div>
             <div>
-              <button onClick={handlScan} className={classes["scan-btn"]}>
+              <button onClick={handlScan} className="btn-big">
                 jel beolvasás
               </button>
               {/* {!isEnd && <button onClick={onCancel}>Vissza</button>} */}

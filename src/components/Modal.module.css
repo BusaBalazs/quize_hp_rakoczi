@@ -1,13 +1,16 @@
-
 .scan-btn,
 .modal h2,
 .modal p {
   font-size: var(--font-size-m);
 }
 
-.modal h2 {
+.code-scan-modal-title {
   font-family: var(--font-title);
+  font-size: 1.7rem;
+  font-weight: 900;
+  letter-spacing: 0.1em;
   text-transform: uppercase;
+  color: var(--color-orage-100);
 }
 
 .feedback-p {
@@ -27,6 +30,7 @@
 
 .map-img-container {
   position: relative;
+  padding: 0 0.3em;
 }
 
 .map-img-container::after,
@@ -43,17 +47,13 @@
 }
 
 .map-img-container::before {
-  left: -149px;
+  left: 8px;
   transform: rotate(-4deg);
 }
 
 .map-img-container::after {
-  right: 4px;
+  right: 8px;
   transform: rotate(2deg);
-}
-
-.magic-wand-img {
-  margin-top: -0.5rem;
 }
 
 .scan-btn,

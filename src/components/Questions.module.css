@@ -10,25 +10,61 @@
 }
 
 .bg-0 {
-  background: no-repeat url("../assets/blur_bg_1.jpg");
+  background: no-repeat url("../assets/bg/bg_0-min.png");
   background-size: cover;
-  background-position: -110px;
+  background-position: center;
 }
 
 .bg-1 {
-  background: no-repeat url("../assets/blur_bg_2.jpg");
+  background: no-repeat url("../assets/bg/bg_1-min.png");
   background-size: cover;
   background-position: center;
 }
 
 .bg-2 {
-  background: no-repeat url("../assets/blur_bg_1.jpg");
+  background: no-repeat url("../assets/bg/bg_2-min.png");
   background-size: cover;
   background-position: center;
 }
 
 .bg-3 {
-  background: no-repeat url("../assets/blur_bg_2.jpg");
+  background: no-repeat url("../assets/bg/bg_3-min.png");
+  background-size: cover;
+  background-position: center;
+}
+
+.bg-4 {
+  background: no-repeat url("../assets/bg/bg_4-min.png");
+  background-size: cover;
+  background-position: center;
+}
+
+.bg-5 {
+  background: no-repeat url("../assets/bg/bg_5-min.png");
+  background-size: cover;
+  background-position: center;
+}
+
+.bg-6 {
+  background: no-repeat url("../assets/bg/bg_6-min.png");
+  background-size: cover;
+  background-position: center;
+}
+
+.bg-7 {
+  background: no-repeat url("../assets/bg/bg_7-min.png");
+  background-size: cover;
+  background-position: center;
+}
+
+.bg-8 {
+  background: no-repeat url("../assets/bg/bg_8-min.png");
+  background-size: cover;
+  background-position: center;
+}
+
+.bg-9 {
+  background: no-repeat url("../assets/bg/bg_9-min.png");
   background-size: cover;
   background-position: center;
 }
@@ -51,7 +87,10 @@
   background-color: var(--color-black-bg);
   margin: auto;
   color: var(--color-orage-100);
-  border: solid 1px var(--color-orage-100);
+  border-bottom: solid 1px var(--color-orage-100);
+  border-left: solid 2px var(--color-orage-100);
+  border-right: solid 2px var(--color-orage-100);
+  border-radius: var(--border-radius-s);
 }
 
 .question h2 {
@@ -62,7 +101,7 @@
   width: 55%;
   position: relative;
   top: 20px;
-  left: 85px;
+  left: 170px;
   transform: rotateZ(-5deg);
 }
 
@@ -86,10 +125,10 @@
   width: 100%;
   padding: 0.5em;
   font-size: var(--font-size-m);
-  color: var(--color-white);
-  background-color: var(--color-black-bg);
-  border: solid 1px var(--color-orage-100);
-  border-radius: var(--border-radius-l);
+  background-color: var(--color-white-alpha);
+  border-left: solid 2px var(--color-orage-100);
+  border-right: solid 2px var(--color-orage-100);
+  border-radius: var(--border-radius-s);
 }
 
 /*test */

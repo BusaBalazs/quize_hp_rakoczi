@@ -17,7 +17,7 @@ const Start = () => {
   const leaderboard = useRef();
 
   //from context.jsx
-  const { startGame } = useCtx();
+  const { startGame, userName } = useCtx();
 
   useEffect(() => {
     const getLocalData = JSON.parse(localStorage.getItem("status"));
@@ -46,7 +46,7 @@ const Start = () => {
       gsap.fromTo(
         "#snitch",
         { scale: 0.5, opacity: 0, x: -50 },
-        { scale: 1, opacity: 1, ease: "back.out", delay: 0.5, x: 0 }
+        { scale: 1, opacity: 1, ease: "back.out", delay: 0.8, x: 0 }
       );
 
       gsap.fromTo(
@@ -60,7 +60,7 @@ const Start = () => {
           opacity: 1,
           stagger: 0.2,
           ease: "back.out",
-          delay: 0.6,
+          delay: 0.9,
         }
       );
     };
@@ -137,6 +137,9 @@ const Start = () => {
               alt="magic wand"
             />
           </div>
+        </div>
+        <div className={classes["welcome-text"]}>
+          {userName && <p>Üdvözöllek {userName}!</p>}
         </div>
       </section>
     </>

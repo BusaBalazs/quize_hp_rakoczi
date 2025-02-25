@@ -3,7 +3,14 @@ import { createContext, useContext, useState, useEffect } from "react";
 import { question } from "../lib/testData";
 
 import { db } from "../firebase";
-import { collection, doc, getDocs, updateDoc, addDoc, Timestamp } from "firebase/firestore";
+import {
+  collection,
+  doc,
+  getDocs,
+  updateDoc,
+  addDoc,
+  Timestamp,
+} from "firebase/firestore";
 
 //-------------------------------------------------------------
 const Ctx = createContext();
@@ -68,7 +75,7 @@ export function CtxProvider(props) {
   const welcomeUser = (user) => {
     setUserName(user);
   };
-  
+
   //-------------------------------------------------------------
   // set the initial game status
   useEffect(() => {
@@ -126,13 +133,24 @@ export function CtxProvider(props) {
             };
           }
         });
+
         const document = dataId.filter((id) => id);
+
+        if (document.length === 0) {
+          await addDoc(collection(db, "users"), {
+            userName: gameStatus.userName.toUpperCase(),
+            uId: gameStatus.uId,
+            createdAt: Timestamp.now(),
+            time: gameStatus.time,
+          });
+          return;
+        }
+
         return document[0];
       } catch (error) {
         console.log(error);
       }
     };
-
     const actualDocument = await getDocId("users");
 
     //--------------------------------------------------------------------

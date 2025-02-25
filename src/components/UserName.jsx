@@ -148,7 +148,6 @@ const UserName = forwardRef(({}, ref) => {
           min: 0,
           sec: 0,
         }
-        //time: gameStatus.time,
       });
     } catch (error) {
       console.log(error);

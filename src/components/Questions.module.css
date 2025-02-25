@@ -131,6 +131,21 @@
   border-radius: var(--border-radius-s);
 }
 
+/***************************************************
+diploma page **************************************/
+
+.diploma-section{
+  padding: 2em 0.5em;
+}
+
+.diploma-text {
+  font-size: var(--font-size-m);
+}
+
+.diploma-img {
+  width: 100%;
+}
+
 /*test */
 /***********************************/
 
@@ -141,8 +156,19 @@
   color: white;
 }
 
+.diploma-container {
+  position: relative;
+}
+
 .test button {
   padding: 0.2em 1em;
+}
+
+.diploma-text-container {
+  width: 100%;
+  position: absolute;
+  margin: auto;
+  top: 80px;
 }
 
 .test-div {

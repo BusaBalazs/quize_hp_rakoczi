@@ -16,7 +16,7 @@ import classes from "./Questions.module.css";
 
 import { question } from "../lib/testData";
 import { ANSWER_FEEDBACK, QR_FEEDBACK } from "../lib/constatnt";
-import { imgNimbus as nimbusImg} from "../assets"; 
+import { imgNimbus as nimbusImg, imgWand, imgDiploma } from "../assets";
 
 //-----------------------------------------------------------------
 
@@ -55,7 +55,7 @@ const Questions = () => {
 
   const btns = useRef([]);
   const questionRef = useRef();
-  const { onTurn } = useCtx();
+  const { onTurn, isEnd } = useCtx();
 
   //---------------------------------------------------------------
 
@@ -74,9 +74,7 @@ const Questions = () => {
 
     //listen every game turn to the last question and invoke the onTurn function in context.jsx
     if (getCounter + 1 === question.length) {
-      dialog.current.open();
       onTurn();
-      //getFinalTime(getStatus.time);
     }
 
     setQuestionId(getStatus.questionId);
@@ -85,29 +83,31 @@ const Questions = () => {
   //--------------------------------------------------------------
 
   useLayoutEffect(() => {
-    const container = questionRef.current;
-    let ctx;
-    if (questionNum >= 0) {
-      gsap.to(".answer-gsap", {
-        x: 0,
-        opacity: 1,
-        ease: "power1.inOut",
-        duration: 0.4,
-        stagger: 0.4,
-        delay: 0.7,
-      });
-
-      ctx = gsap.context(() => {
-        gsap.from(container, {
-          y: -50,
-          opacity: 0,
-          duration: 1,
-          delay: 0.2,
-          ease: "bounce.out",
+    if (!isEnd) {
+      const container = questionRef.current;
+      let ctx;
+      if (questionNum >= 0) {
+        gsap.to(".answer-gsap", {
+          x: 0,
+          opacity: 1,
+          ease: "power1.inOut",
+          duration: 0.4,
+          stagger: 0.4,
+          delay: 0.7,
         });
-      });
+
+        ctx = gsap.context(() => {
+          gsap.from(container, {
+            y: -50,
+            opacity: 0,
+            duration: 1,
+            delay: 0.2,
+            ease: "bounce.out",
+          });
+        });
+      }
+      return () => ctx.revert();
     }
-    return () => ctx.revert();
   }, [questionNum]);
 
   //--------------------------------------------------------------
@@ -148,7 +148,7 @@ const Questions = () => {
 
         //listen every game turn to the last question and invoke the onTurn function in context.jsx
         if (getCounter === question.length) {
-          dialog.current.open();
+          //dialog.current.open();
           onTurn();
           setQuestionNum(getCounter - 1);
           getCounter--;
@@ -178,7 +178,7 @@ const Questions = () => {
 
       //listen every game turn to the last question and invoke the onTurn function in context.jsx
       if (getCounter === question.length) {
-        dialog.current.open();
+        //dialog.current.open();
         onTurn();
         setQuestionNum(getCounter - 1);
         getCounter--;
@@ -203,46 +203,70 @@ const Questions = () => {
         actualQuestionNum={questionNum}
       />
 
-      <section
-        className={`${classes["container"]} ${classes[`bg-${questionNum}`]}`}
-      >
-        <div
-          ref={questionRef}
-          id="question-gsap"
-          className={classes["question-container"]}
+      {!isEnd ? (
+        <section
+          className={`${classes["container"]} ${classes[`bg-${questionNum}`]}`}
         >
-          <img
-            src={nimbusImg}
-            alt="nimbusz 2000"
-            className={classes["nimbus-img"]}
-          />
-          <div className={classes["question"]}>
-            <h2>{question[questionNum].question}</h2>
-            <code>{question[questionNum].operation}</code>
+          <div
+            ref={questionRef}
+            id="question-gsap"
+            className={classes["question-container"]}
+          >
+            <img
+              src={nimbusImg}
+              alt="nimbusz 2000"
+              className={classes["nimbus-img"]}
+            />
+            <div className={classes["question"]}>
+              <h2>{question[questionNum].question}</h2>
+              <code>{question[questionNum].operation}</code>
+            </div>
           </div>
-        </div>
-        <ul className={classes.list}>
-          {question[questionNum].answers.map((item, i) => (
-            <QuestionItem
-              key={item.answer}
-              CheckAnswer={(e, index = i) => isOk(e, index, item.right)}
-              isDisabled={!answerIsTrue ? true : false}
-              ref={(el) => (btns.current[i] = el)}
-              className="answer-gsap"
-            >
-              {item.answer}
-            </QuestionItem>
-          ))}
-        </ul>
-        <Process
-          numOfQuestion={questionNum}
-          numOfAllQuestion={question.length}
+          <ul className={classes.list}>
+            {question[questionNum].answers.map((item, i) => (
+              <QuestionItem
+                key={item.answer}
+                CheckAnswer={(e, index = i) => isOk(e, index, item.right)}
+                isDisabled={!answerIsTrue ? true : false}
+                ref={(el) => (btns.current[i] = el)}
+                className="answer-gsap"
+              >
+                {item.answer}
+              </QuestionItem>
+            ))}
+          </ul>
+          <Process
+            numOfQuestion={questionNum}
+            numOfAllQuestion={question.length}
           />
 
-        <div className={classes.test}>
-          <button onClick={handleTest}>{questionId[questionNum]}</button>
-        </div>
-      </section>
+          <div className={classes.test}>
+            <button onClick={handleTest}>{questionId[questionNum]}</button>
+          </div>
+        </section>
+      ) : (
+        <section className={classes["diploma-section"]}>
+          <div className="header-contaier">
+            <h2>gratulálunk</h2>
+            <img src={imgWand} className="magic-wand-img" alt="magic wand" />
+          </div>
+          <p className={classes["diploma-text"]}>
+            Teljesítetted az összes próbát. Büszkén veheted át a varázsló
+            okleveled:
+          </p>
+          <div className={classes["diploma-container"]}>
+            <img className={classes["diploma-img"]} src={imgDiploma} alt="diploma of success of game play" />
+            <div className={classes["diploma-text-container"]}>
+              <p>Harry Potter</p>
+              <p>Részére</p>
+              <p>
+                Aki <span>00:00:25</span> idő alatt teljesítette a kihívást
+              </p>
+            </div>
+          </div>
+          <button className={`${classes["leader-board-btn"]} btn`}>ok</button>
+        </section>
+      )}
     </>
   );
 };

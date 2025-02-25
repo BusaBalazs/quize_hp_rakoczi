@@ -5,6 +5,9 @@ import React, {
   useState,
 } from "react";
 
+import { collection, addDoc, Timestamp } from "firebase/firestore";
+import { db } from "../firebase";
+
 import { useCtx } from "../context/context";
 
 import { v4 as uuidv4 } from "uuid";
@@ -132,6 +135,24 @@ const UserName = forwardRef(({}, ref) => {
         uId: userId,
       })
     );
+
+    //-------------------------------------------------------------
+    // save data to firestore
+    try {
+      await addDoc(collection(db, "users"), {
+        userName: getUserName.toUpperCase(),
+        uId: userId,
+        createdAt: Timestamp.now(),
+        time: {
+          hour: 0,
+          min: 0,
+          sec: 0,
+        }
+        //time: gameStatus.time,
+      });
+    } catch (error) {
+      console.log(error);
+    }
 
     dialog.current.close();
   };

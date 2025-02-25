@@ -104,18 +104,6 @@ export function CtxProvider(props) {
           isStart: true,
         })
       );
-
-      //-------------------------------------------------------------
-      // save data to firestore
-      try {
-        await addDoc(collection(db, "users"), {
-          userName: gameStatus.userName.toUpperCase(),
-          uId: gameStatus.uId,
-          createdAt: Timestamp.now(),
-        });
-      } catch (error) {
-        console.log(error);
-      }
     }
   };
 

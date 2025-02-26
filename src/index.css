@@ -22,7 +22,7 @@
 
 :root {
   /*** FONT-SIZES ***/
-  --font-size-s: clamp(1rem, 5vw, 1.2rem);
+  --font-size-s: clamp(1rem, 3vw, 2.2rem);
   --font-size-m: clamp(1.3rem, 4vw, 2.2rem);
   --font-size-l: clamp(2rem, 5vw, 2.5rem);
   --font-size-xl: clamp(2rem, 12vw, 3.5rem);
@@ -185,3 +185,5 @@ img {
   width: 80%;
   margin: auto;
 }
+
+

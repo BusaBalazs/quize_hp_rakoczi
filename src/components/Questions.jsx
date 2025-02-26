@@ -5,15 +5,18 @@ import gsap from "gsap";
 import { useCtx } from "../context/context";
 
 //-----------------------------------------------------------------
+import downloadjs from "downloadjs";
+import html2canvas from "html2canvas";
 
+//-----------------------------------------------------------------
 import QuestionItem from "./QuestionItem";
 import Modal from "./Modal";
 import Process from "./Process";
 
 //-----------------------------------------------------------------
 import classes from "./Questions.module.css";
-//-----------------------------------------------------------------
 
+//-----------------------------------------------------------------
 import { question } from "../lib/testData";
 import { ANSWER_FEEDBACK, QR_FEEDBACK } from "../lib/constatnt";
 import { imgNimbus as nimbusImg, imgWand, imgDiploma } from "../assets";
@@ -52,10 +55,11 @@ const Questions = () => {
   const [questionNum, setQuestionNum] = useState(0);
   const [feedback, setFeedback] = useState(ANSWER_FEEDBACK);
   const [questionId, setQuestionId] = useState([]);
+  const [diplomaData, setDiplomaData] = useState();
 
   const btns = useRef([]);
   const questionRef = useRef();
-  const { onTurn, isEnd } = useCtx();
+  const { onTurn, isEnd, restart } = useCtx();
 
   //---------------------------------------------------------------
 
@@ -149,6 +153,10 @@ const Questions = () => {
         //listen every game turn to the last question and invoke the onTurn function in context.jsx
         if (getCounter === question.length) {
           //dialog.current.open();
+          setDiplomaData({
+            userName: getStatus.userName,
+            time: getStatus.time,
+          });
           onTurn();
           setQuestionNum(getCounter - 1);
           getCounter--;
@@ -179,6 +187,10 @@ const Questions = () => {
       //listen every game turn to the last question and invoke the onTurn function in context.jsx
       if (getCounter === question.length) {
         //dialog.current.open();
+        setDiplomaData({
+          userName: getStatus.userName,
+          time: getStatus.time,
+        });
         onTurn();
         setQuestionNum(getCounter - 1);
         getCounter--;
@@ -192,6 +204,22 @@ const Questions = () => {
     }
   };
 
+  //--------------------------------------------------------------
+  const handleRestart = () => {
+    restart();
+  };
+
+  //--------------------------------------------------------------
+  const handleCapture = async () => {
+    const diplomaContainer = document.querySelector("#diploma");
+
+    const canvas = await html2canvas(diplomaContainer);
+
+    const dataURL = canvas.toDataURL("image/png");
+    downloadjs(dataURL, "potter.png", "image/png");
+  };
+
+  console.log(diplomaData)
   //--------------------------------------------------------------
   return (
     <>
@@ -245,26 +273,52 @@ const Questions = () => {
           </div>
         </section>
       ) : (
-        <section className={classes["diploma-section"]}>
-          <div className="header-contaier">
-            <h2>gratulálunk</h2>
-            <img src={imgWand} className="magic-wand-img" alt="magic wand" />
-          </div>
-          <p className={classes["diploma-text"]}>
-            Teljesítetted az összes próbát. Büszkén veheted át a varázsló
-            okleveled:
-          </p>
-          <div className={classes["diploma-container"]}>
-            <img className={classes["diploma-img"]} src={imgDiploma} alt="diploma of success of game play" />
-            <div className={classes["diploma-text-container"]}>
-              <p>Harry Potter</p>
-              <p>Részére</p>
-              <p>
-                Aki <span>00:00:25</span> idő alatt teljesítette a kihívást
-              </p>
+        <section className={classes["diploma-section-bg"]}>
+          <div className={classes["diploma-section"]}>
+            <div className="header-contaier">
+              <h2>gratulálunk</h2>
+              <img src={imgWand} className="magic-wand-img" alt="magic wand" />
             </div>
+            <p className={classes["diploma-text"]}>
+              Teljesítetted az összes próbát. Büszkén veheted át a varázsló
+              okleveled:
+            </p>
+            <div id="diploma" className={classes["diploma-container"]}>
+              <img
+                className={classes["diploma-img"]}
+                src={imgDiploma}
+                alt="diploma of success of game play"
+              />
+              <div className={classes["diploma-text-container"]}>
+                <p
+                  className={classes["diploma-name"]}
+                  style={{ fontFamily: '"Cinzel Decorative", serif' }}
+                >
+                  {diplomaData && diplomaData.userName}
+                </p>
+                <p style={{ fontFamily: '"Cinzel Decorative", serif' }}>
+                  Részére
+                </p>
+                <p style={{ fontFamily: '"Cinzel Decorative", serif' }}>
+                  Aki{" "}
+                  <span
+                    className={classes["time"]}
+                    style={{ fontFamily: '"Cinzel Decorative", serif' }}
+                  >
+                    {diplomaData && `${diplomaData.time.hour}:${diplomaData.time.min}:${diplomaData.time.sec}`}
+                  </span>{" "}
+                  idő alatt teljesítette a kihívást
+                </p>
+              </div>
+            </div>
+            <button onClick={handleCapture}>pic</button>
+            <button
+              onClick={handleRestart}
+              className={`${classes["leader-board-btn"]} btn`}
+            >
+              ok
+            </button>
           </div>
-          <button className={`${classes["leader-board-btn"]} btn`}>ok</button>
         </section>
       )}
     </>

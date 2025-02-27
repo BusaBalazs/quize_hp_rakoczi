@@ -140,6 +140,7 @@ const Start = () => {
         </div>
         <div className={classes["welcome-text"]}>
           {userName && <p>Üdvözöllek {userName}!</p>}
+          <p>Induljon a játék!</p>
         </div>
       </section>
     </>

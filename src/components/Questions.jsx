@@ -210,16 +210,18 @@ const Questions = () => {
   };
 
   //--------------------------------------------------------------
+  // downnload diploma
   const handleCapture = async () => {
     const diplomaContainer = document.querySelector("#diploma");
 
-    const canvas = await html2canvas(diplomaContainer);
+    const canvas = await html2canvas(diplomaContainer, {
+      backgroundColor: null,
+    });
 
     const dataURL = canvas.toDataURL("image/png");
     downloadjs(dataURL, "potter.png", "image/png");
   };
 
-  console.log(diplomaData)
   //--------------------------------------------------------------
   return (
     <>
@@ -274,51 +276,56 @@ const Questions = () => {
         </section>
       ) : (
         <section className={classes["diploma-section-bg"]}>
-          <div className={classes["diploma-section"]}>
-            <div className="header-contaier">
-              <h2>gratulálunk</h2>
-              <img src={imgWand} className="magic-wand-img" alt="magic wand" />
-            </div>
-            <p className={classes["diploma-text"]}>
-              Teljesítetted az összes próbát. Büszkén veheted át a varázsló
-              okleveled:
-            </p>
-            <div id="diploma" className={classes["diploma-container"]}>
-              <img
-                className={classes["diploma-img"]}
-                src={imgDiploma}
-                alt="diploma of success of game play"
-              />
-              <div className={classes["diploma-text-container"]}>
-                <p
-                  className={classes["diploma-name"]}
-                  style={{ fontFamily: '"Cinzel Decorative", serif' }}
-                >
-                  {diplomaData && diplomaData.userName}
-                </p>
-                <p style={{ fontFamily: '"Cinzel Decorative", serif' }}>
-                  Részére
-                </p>
-                <p style={{ fontFamily: '"Cinzel Decorative", serif' }}>
-                  Aki{" "}
-                  <span
-                    className={classes["time"]}
-                    style={{ fontFamily: '"Cinzel Decorative", serif' }}
-                  >
-                    {diplomaData && `${diplomaData.time.hour}:${diplomaData.time.min}:${diplomaData.time.sec}`}
-                  </span>{" "}
-                  idő alatt teljesítette a kihívást
-                </p>
-              </div>
-            </div>
-            <button onClick={handleCapture}>pic</button>
-            <button
-              onClick={handleRestart}
-              className={`${classes["leader-board-btn"]} btn`}
-            >
-              ok
-            </button>
+          <div className="header-contaier">
+            <h2>gratulálunk</h2>
+            <img src={imgWand} className="magic-wand-img" alt="magic wand" />
           </div>
+          <p className={classes["diploma-text"]}>
+            Teljesítetted az összes próbát. Büszkén veheted át a varázsló
+            okleveled:
+          </p>
+          <div id="diploma" className={classes["diploma-container"]}>
+            <img
+              className={classes["diploma-img"]}
+              src={imgDiploma}
+              alt="diploma of success of game play"
+            />
+            <div className={classes["diploma-text-container"]}>
+              <p
+                className={classes["diploma-name"]}
+                style={{ fontFamily: '"Cinzel Decorative", serif' }} //use inline style because of HTML2canvas
+              >
+                {diplomaData && diplomaData.userName}
+              </p>
+              <p style={{ fontFamily: '"Cinzel Decorative", serif' }}>
+                Részére
+              </p>
+              <p style={{ fontFamily: '"Cinzel Decorative", serif', fontWeight: "700"}}>
+                Aki{" "}
+                <span
+                  className={classes["time"]}
+                  style={{ fontFamily: '"Cinzel Decorative", serif', fontWeight: "700" }}
+                >
+                  {diplomaData &&
+                    `${diplomaData.time.hour}:${diplomaData.time.min}:${diplomaData.time.sec}`}
+                </span>{" "}
+                idő alatt teljesítette a kihívást
+              </p>
+            </div>
+          </div>
+          <p className={classes["link-paragraph"]}>
+            A Diploma letöltéséhez{" "}
+            <span className={classes["download-link"]} onClick={handleCapture}>
+              INNEN!
+            </span>
+          </p>
+
+          <button
+            onClick={handleRestart}
+            className={`${classes["leader-board-btn"]} btn`}
+          >
+            ok
+          </button>
         </section>
       )}
     </>

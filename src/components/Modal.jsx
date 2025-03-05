@@ -17,8 +17,8 @@ import classes from "./Modal.module.css";
 
 import { useCtx } from "../context/context.jsx";
 
-import { nextQrPlace } from "../lib/testData.js";
-import { imgWand, mapImg } from "../assets/index.js";
+import { imgWand, maps } from "../assets/index.js";
+
 
 //-----------------------------------------------------------------
 //-----------------------------------------------------------------
@@ -95,10 +95,9 @@ const Modal = forwardRef(({ getScanId, modalText, actualQuestionNum }, ref) => {
               >
                 {modalText.paragraphe}
               </p>
-              <p>Amit a {id && nextQrPlace[id[actualQuestionNum]]} találsz</p>
             </div>
             <div className={classes["map-img-container"]}>
-              <img src={mapImg} alt="map" className={classes["map-img"]} />
+              <img src={id && maps[id[actualQuestionNum]]} alt="map" className={classes["map-img"]} />
             </div>
             <div>
               <button onClick={handlScan} className="btn-big">

@@ -12,7 +12,7 @@ import html2canvas from "html2canvas";
 import QuestionItem from "./QuestionItem";
 import Modal from "./Modal";
 import Process from "./Process";
-
+import Timer from "./Timer";
 //-----------------------------------------------------------------
 import classes from "./Questions.module.css";
 
@@ -237,38 +237,43 @@ const Questions = () => {
         <section
           className={`${classes["container"]} ${classes[`bg-${questionNum}`]}`}
         >
-          <div
-            ref={questionRef}
-            id="question-gsap"
-            className={classes["question-container"]}
-          >
-            <img
-              src={nimbusImg}
-              alt="nimbusz 2000"
-              className={classes["nimbus-img"]}
+          <div>
+            <Process
+              numOfQuestion={questionNum}
+              numOfAllQuestion={question.length}
             />
-            <div className={classes["question"]}>
-              <h2>{question[questionNum].question}</h2>
-              <code>{question[questionNum].operation}</code>
-            </div>
           </div>
-          <ul className={classes.list}>
-            {question[questionNum].answers.map((item, i) => (
-              <QuestionItem
-                key={item.answer}
-                CheckAnswer={(e, index = i) => isOk(e, index, item.right)}
-                isDisabled={!answerIsTrue ? true : false}
-                ref={(el) => (btns.current[i] = el)}
-                className="answer-gsap"
-              >
-                {item.answer}
-              </QuestionItem>
-            ))}
-          </ul>
-          <Process
-            numOfQuestion={questionNum}
-            numOfAllQuestion={question.length}
-          />
+          <div className={classes["question-section"]}>
+            <div
+              ref={questionRef}
+              id="question-gsap"
+              className={classes["question-container"]}
+            >
+              <img
+                src={nimbusImg}
+                alt="nimbusz 2000"
+                className={classes["nimbus-img"]}
+              />
+              <div className={classes["question"]}>
+                <h2>{question[questionNum].question}</h2>
+                <code>{question[questionNum].operation}</code>
+              </div>
+            </div>
+            <ul className={classes.list}>
+              {question[questionNum].answers.map((item, i) => (
+                <QuestionItem
+                  key={item.answer}
+                  CheckAnswer={(e, index = i) => isOk(e, index, item.right)}
+                  isDisabled={!answerIsTrue ? true : false}
+                  ref={(el) => (btns.current[i] = el)}
+                  className="answer-gsap"
+                >
+                  {item.answer}
+                </QuestionItem>
+              ))}
+            </ul>
+            <Timer className={classes["timer-display"]} isEnd={isEnd} />
+          </div>
 
           <div className={classes.test}>
             <button onClick={handleTest}>{questionId[questionNum]}</button>
@@ -300,11 +305,19 @@ const Questions = () => {
               <p style={{ fontFamily: '"Cinzel Decorative", serif' }}>
                 Részére
               </p>
-              <p style={{ fontFamily: '"Cinzel Decorative", serif', fontWeight: "700"}}>
+              <p
+                style={{
+                  fontFamily: '"Cinzel Decorative", serif',
+                  fontWeight: "700",
+                }}
+              >
                 Aki{" "}
                 <span
                   className={classes["time"]}
-                  style={{ fontFamily: '"Cinzel Decorative", serif', fontWeight: "700" }}
+                  style={{
+                    fontFamily: '"Cinzel Decorative", serif',
+                    fontWeight: "700",
+                  }}
                 >
                   {diplomaData &&
                     `${diplomaData.time.hour}:${diplomaData.time.min}:${diplomaData.time.sec}`}

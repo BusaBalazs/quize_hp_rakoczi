@@ -41,7 +41,7 @@
   --color-white-alpha: rgba(246, 246, 246, 0.6);
   --color-white-alpha-shadow: rgba(246, 246, 246, 0.25);
   --color-black-bg: rgb(0, 0, 0, 0.8);
-  --color-blue-200: rgb(0, 135, 219);
+  --color-blue-200: rgba(0, 135, 219, 0.664);
 
   --color-bg: linear-gradient(
     130deg,

@@ -5,8 +5,11 @@
   width: 100vw;
   height: 100vmax;
   text-align: center;
-  padding: 1em;
   overflow: hidden;
+}
+
+.question-section {
+  padding: 1em;
 }
 
 .bg-0 {
@@ -136,7 +139,7 @@ diploma page **************************************/
 
 .diploma-section-bg {
   width: 100%;
-  height: 100%;
+  height: 100vmax;
   padding: 2em .5em;
   background: url("../assets/pop_up_bg-min.png");
   background-size: cover;
@@ -203,13 +206,31 @@ time {
   filter: drop-shadow(0px 0px 2px black);
 }
 
+/* timer */
+/***********************************/
+
+.timer-display {
+  width: 105px;
+  height: 105px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 1em auto;
+  padding: 0.65em 1em;
+  background-color: var(--color-black-bg);
+  color: var(--color-white);
+  border-radius: var(--border-radius-xl);
+  box-shadow: 0 0 4px var(--color-orage-200), 0 0 68px var(--color-orage-200);
+}
+
+
 /***************************************/
 /*test */
 /***********************************/
 
 .test {
   position: absolute;
-  top: 0;
+  bottom: 50px;
   margin-top: 1rem;
   color: white;
 }

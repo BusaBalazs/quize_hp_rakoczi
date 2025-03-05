@@ -24,20 +24,17 @@ const Process = ({ numOfQuestion, numOfAllQuestion }) => {
   //--------------------------------------------------------------
   return (
     <section className={classes["process-container"]}>
-      
-      <Timer className={classes["timer-display"]} isEnd={isEnd} />
-
       <div className={classes["process-indicator-container"]}>
-        <p className={classes["num-of-question"]}>{`${
-          numOfQuestion + 1
-        }/${numOfAllQuestion}`}</p>
-        <div className={classes["process-indicator-container"]}>
-          <span className={classes["process-indicator-bg"]} />
+        <div className={classes["process-lines-container"]}>
+          <p className={classes["num-of-question"]}>{`${
+            numOfQuestion + 1
+          }/${numOfAllQuestion}`}</p>
           <span
             id="process"
             ref={indicator}
-            className={classes["process-indicator"]}
+            className={classes["process-indicator-blue"]}
           />
+          <span className={classes["process-indicator-white"]} />
         </div>
       </div>
     </section>

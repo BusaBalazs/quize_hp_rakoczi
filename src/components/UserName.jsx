@@ -41,6 +41,7 @@ const userNameIsOk = (str, forbiddenName) => {
 
 const forbiddenUserName = [
   "fasz",
+  "faszvero",
   "faszom",
   "kurva",
   "anyad",
@@ -56,6 +57,7 @@ const forbiddenUserName = [
   "picsaba",
   "picsafasz",
   "bazdmeg",
+  "baszdmeg",
   "basszameg",
   "baszameg",
   "megbassza",
@@ -74,12 +76,16 @@ const forbiddenUserName = [
   "anusz",
   "segbekur",
   "seggbekur",
+  "seglyuk",
   "elmeszteapicsaba",
   "geci",
   "gecilada",
   "geciputtony",
   "gecipotter",
   "geciharrypotter",
+  "buzi",
+  "buzerator",
+  "homokos",
 ];
 
 //-------------------------------------------------------

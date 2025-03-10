@@ -153,7 +153,7 @@ const UserName = forwardRef(({}, ref) => {
           hour: 0,
           min: 0,
           sec: 0,
-        }
+        },
       });
     } catch (error) {
       console.log(error);

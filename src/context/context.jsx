@@ -93,7 +93,7 @@ export function CtxProvider(props) {
       });
     }
 
-    gameStatus && !gameStatus.isStart ? setIsStart(false) : setIsStart(true);
+    gameStatus && setIsStart(gameStatus.isStart);
   }, []);
 
   //-------------------------------------------------------------

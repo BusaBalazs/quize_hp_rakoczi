@@ -112,13 +112,6 @@ img {
 }
 
 #reader__dashboard_section_csr button {
-  visibility: hidden;
-}
-
-#reader__dashboard_section_csr button::after {
-  content: "Kamera Engedélyezése";
-  visibility: visible;
-  display: block;
   font-size: var(--font-size-m);
   padding: 0.5em 1.1em;
   margin-top: 2em;
@@ -129,6 +122,8 @@ img {
   border-left: 2px solid var(--color-orage-100);
   border-right: 2px solid var(--color-orage-100);
 }
+
+
 
 /*-----------------------------------------------------------------------*/
 /*modal basic style-----------------------------------------------------------*/

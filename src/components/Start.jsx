@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from "react";
-
+import { useNavigate } from "react-router";
 import { gsap } from "gsap/gsap-core";
 
 import UserName from "./UserName.jsx";
@@ -15,6 +15,7 @@ import { imgWand, imgSnitch } from "../assets/index.js";
 const Start = () => {
   const dialog = useRef();
   const leaderboard = useRef();
+  const navigate = useNavigate();
 
   //from context.jsx
   const { startGame, userName } = useCtx();
@@ -79,8 +80,9 @@ const Start = () => {
   //-----------------------------------------------------------
 
   //invoke the startGame function in context.jsx
-  const handleClick = () => {
+  const handleStart = () => {
     startGame();
+    navigate("/questions");
   };
 
   //-----------------------------------------------------------
@@ -99,7 +101,7 @@ const Start = () => {
       <UserName ref={dialog} />
       <Leaderboard ref={leaderboard} />
       <section className={classes["start-page"]}>
-        <div onClick={handleClick} className={classes["btn-container"]}>
+        <div onClick={handleStart} className={classes["btn-container"]}>
           <button id="start-btn" className={classes["start-btn"]}>
             start
           </button>

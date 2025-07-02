@@ -7,6 +7,9 @@ import mapImg_1 from "./maps/rakoczi_map_1.png";
 import mapImg_2 from "./maps/rakoczi_map_2.png";
 import mapImg_3 from "./maps/rakoczi_map_3.png";
 import mapImg_4 from "./maps/rakoczi_map_4.png";
+import mapImg_5 from "./maps/rakoczi_map_5.png";
+import mapImg_6 from "./maps/rakoczi_map_6.png";
+import mandrakeSound from "./mandrake.mp3"
 
 
 //----------------------------------------------------
@@ -16,6 +19,8 @@ export const maps = [
   mapImg_2,
   mapImg_3,
   mapImg_4,
+  mapImg_5,
+  mapImg_6,
 ];
 
-export { imgWand, imgNimbus, imgSnitch, imgDiploma };
+export { imgWand, imgNimbus, imgSnitch, imgDiploma, mandrakeSound };

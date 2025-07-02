@@ -1,5 +1,5 @@
 import React, { useRef, useState, useEffect, useLayoutEffect } from "react";
-
+import { useNavigate } from "react-router";
 import gsap from "gsap";
 
 import { useCtx } from "../context/context";
@@ -19,7 +19,12 @@ import classes from "./Questions.module.css";
 //-----------------------------------------------------------------
 import { question } from "../lib/testData";
 import { ANSWER_FEEDBACK, QR_FEEDBACK } from "../lib/constatnt";
-import { imgNimbus as nimbusImg, imgWand, imgDiploma } from "../assets";
+import {
+  imgNimbus as nimbusImg,
+  imgWand,
+  imgDiploma,
+  mandrakeSound,
+} from "../assets";
 
 //-----------------------------------------------------------------
 
@@ -47,9 +52,10 @@ const setLocalData = (key, value) => {
 
 //-----------------------------------------------------------------
 //-----------------------------------------------------------------
-
+//-----------------------------------------------------------------
 const Questions = () => {
   const dialog = useRef();
+  const navigate = useNavigate();
 
   const [answerIsTrue, setAnswerIsTrue] = useState(true);
   const [questionNum, setQuestionNum] = useState(0);
@@ -64,11 +70,11 @@ const Questions = () => {
   //---------------------------------------------------------------
 
   //--------------------------------------------------------------
-
+ 
   useEffect(() => {
     const getStatus = getLocaldata("status");
     let getCounter = getStatus.questionCounter;
-
+    let gameEnd = getStatus.gameEnd
     // when the page loded or reloaded this useEffect set the actual question number, if the game just has begun set the first question
     if (getCounter === 0) {
       setQuestionNum(0);
@@ -77,11 +83,18 @@ const Questions = () => {
     }
 
     //listen every game turn to the last question and invoke the onTurn function in context.jsx
-    if (getCounter + 1 === question.length) {
+    
+    if (gameEnd && getCounter + 1 === question.length) {
       onTurn();
     }
 
     setQuestionId(getStatus.questionId);
+
+    // set the time for diploma data
+    setDiplomaData({
+      userName: getStatus.userName,
+      time: getStatus.time,
+    });
   }, []);
 
   //--------------------------------------------------------------
@@ -124,6 +137,15 @@ const Questions = () => {
     } else {
       setAnswerIsTrue(false);
       //setBtn(e.target);
+      if (questionNum === 6) {
+        new Audio(mandrakeSound).play();
+        btns.current[index].style.backgroundColor = "rgba(194, 0, 0, 0.7)";
+        setTimeout(() => {
+          btns.current[index].style.backgroundColor = "";
+          setAnswerIsTrue(true);
+        }, 4500);
+        return;
+      }
       btns.current[index].style.backgroundColor = "rgba(194, 0, 0, 0.7)";
       setTimeout(() => {
         btns.current[index].style.backgroundColor = "";
@@ -191,10 +213,10 @@ const Questions = () => {
           userName: getStatus.userName,
           time: getStatus.time,
         });
-        onTurn();
         setQuestionNum(getCounter - 1);
         getCounter--;
         setLocalData("status", { ...getStatus, questionCounter: getCounter });
+        onTurn();
         return;
       }
 
@@ -207,6 +229,7 @@ const Questions = () => {
   //--------------------------------------------------------------
   const handleRestart = () => {
     restart();
+    navigate("/");
   };
 
   //--------------------------------------------------------------
@@ -222,6 +245,20 @@ const Questions = () => {
     downloadjs(dataURL, "potter.png", "image/png");
   };
 
+  const diplomaTime = diplomaData && {
+    hour:
+      diplomaData.time.hour < 10
+        ? `0${diplomaData.time.hour}`
+        : diplomaData.time.hour,
+    min:
+      diplomaData.time.min < 10
+        ? `0${diplomaData.time.min}`
+        : diplomaData.time.min,
+    sec:
+      diplomaData.time.sec < 10
+        ? `0${diplomaData.time.sec}`
+        : diplomaData.time.sec,
+  };
   //--------------------------------------------------------------
   return (
     <>
@@ -286,8 +323,7 @@ const Questions = () => {
             <img src={imgWand} className="magic-wand-img" alt="magic wand" />
           </div>
           <p className={classes["diploma-text"]}>
-            Teljesítetted az összes próbát. Büszkén veheted át a varázsló
-            okleveled:
+            Büszkén veheted át a varázsló okleveled:
           </p>
           <div id="diploma" className={classes["diploma-container"]}>
             <img
@@ -302,16 +338,15 @@ const Questions = () => {
               >
                 {diplomaData && diplomaData.userName}
               </p>
-              <p style={{ fontFamily: '"Cinzel Decorative", serif' }}>
-                Részére
-              </p>
+              <p style={{ fontFamily: '"Cinzel Decorative", serif' }}></p>
               <p
                 style={{
                   fontFamily: '"Cinzel Decorative", serif',
                   fontWeight: "700",
+                  textWrap: "balance",
+                  marginTop: "1.5em",
                 }}
               >
-                Aki{" "}
                 <span
                   className={classes["time"]}
                   style={{
@@ -320,14 +355,14 @@ const Questions = () => {
                   }}
                 >
                   {diplomaData &&
-                    `${diplomaData.time.hour}:${diplomaData.time.min}:${diplomaData.time.sec}`}
+                    `${diplomaTime.hour}:${diplomaTime.min}:${diplomaTime.sec}`}
                 </span>{" "}
-                idő alatt teljesítette a kihívást
+                idő alatt teljesítetted a feladatokat
               </p>
             </div>
           </div>
           <p className={classes["link-paragraph"]}>
-            A Diploma letöltéséhez{" "}
+            A Diplomát letöltheted:{" "}
             <span className={classes["download-link"]} onClick={handleCapture}>
               INNEN!
             </span>

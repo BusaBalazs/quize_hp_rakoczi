@@ -17,6 +17,12 @@
   font-size: var(--font-size-m);
   margin-bottom: 1em;
   color: var(--color-white);
+  text-wrap: balance;
+}
+
+.welcome-text h2 {
+  margin-bottom: 1.5em;
+  color: var(--color-orage-100);
 }
 
 .btn-container {

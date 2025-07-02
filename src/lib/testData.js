@@ -94,6 +94,51 @@ export const question = [
       },
     ],
   },
+  {
+    id: 5,
+    question: "Mi a neve a Herbológia (növénytan) tantárgy tanárának?",
+    operation: "",
+    answers: [
+      {
+        answer: "Pomona Bimba",
+        right: true,
+      },
+      {
+        answer: "Severus Snape",
+        right: false,
+      },
+      {
+        answer: "Minerva McGalagony",
+        right: false,
+      },
+    ],
+  },
+  {
+    id: 6,
+    question:
+      "Mi történik, ha valaki fülvédő nélkül hallgatja meg a mandragóra sikítását?",
+    operation: "",
+    answers: [
+      {
+        answer: "meghal",
+        right: true,
+      },
+      {
+        answer: "Elájul",
+        right: false,
+      },
+      {
+        answer: "Elalszik egy órára",
+        right: false,
+      },
+    ],
+  },
 ];
 
-export const nextQrPlace = ["HUGI SZOBÁJÁBAN", "NAPPALIBAN", "LENTI FÜRDŐBEN", "FANNI SZOBÁJÁBAN", "HÁLÓSZOBÁBAN"];
+export const nextQrPlace = [
+  "HUGI SZOBÁJÁBAN",
+  "NAPPALIBAN",
+  "LENTI FÜRDŐBEN",
+  "FANNI SZOBÁJÁBAN",
+  "HÁLÓSZOBÁBAN",
+];

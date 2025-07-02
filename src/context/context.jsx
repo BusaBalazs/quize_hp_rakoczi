@@ -53,6 +53,7 @@ const dataInit = {
   uId: "",
   questionId,
   isStart: false,
+
   questionCounter: 0,
   time: {
     sec: 0,
@@ -85,13 +86,6 @@ export function CtxProvider(props) {
       setLocalData("status", dataInit);
     }
 
-    if (gameStatus && gameStatus.userName !== "") {
-      setUserName(gameStatus.userName);
-      setLocalData("status", {
-        ...gameStatus,
-        userName: gameStatus.userName,
-      });
-    }
 
     gameStatus && setIsStart(gameStatus.isStart);
   }, []);
@@ -109,6 +103,7 @@ export function CtxProvider(props) {
         JSON.stringify({
           ...gameStatus,
           isStart: true,
+          gameEnd: false,
         })
       );
     }
@@ -117,8 +112,17 @@ export function CtxProvider(props) {
   //-------------------------------------------------------------
   const handleTurn = async () => {
     setIsEnd(true);
-    const gameStatus = getLocaldata("status");
+console.log("dsfsdfsdfsdf")
+    // Always get the latest gameStatus from localStorage
+    let gameStatus = getLocaldata("status");
 
+    // Defensive: If gameStatus is null, do nothing
+    if (!gameStatus) return;
+
+    // Update gameEnd to true and save to localStorage
+    gameStatus.gameEnd = true;
+    setLocalData("status", gameStatus);
+/*
     //-----------------------------------------
     // set the user name and time to firebase database
     // fetch the actual user data
@@ -169,7 +173,7 @@ export function CtxProvider(props) {
       time: gameStatus.time,
     };
 
-    updateData("users", actualDocument.id, newDocument);
+    updateData("users", actualDocument.id, newDocument);*/
   };
 
   //-------------------------------------------------------------

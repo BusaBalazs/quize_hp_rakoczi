@@ -2,7 +2,6 @@ import React, { useEffect, useRef } from "react";
 import { useNavigate } from "react-router";
 import { gsap } from "gsap/gsap-core";
 
-import UserName from "./UserName.jsx";
 import Leaderboard from "./Leaderboard.jsx";
 import { useCtx } from "../context/context";
 
@@ -13,19 +12,11 @@ import { imgWand, imgSnitch } from "../assets/index.js";
 //-------------------------------------------------------
 //-------------------------------------------------------
 const Start = () => {
-  const dialog = useRef();
   const leaderboard = useRef();
   const navigate = useNavigate();
 
   //from context.jsx
   const { startGame, userName } = useCtx();
-
-  useEffect(() => {
-    const getLocalData = JSON.parse(localStorage.getItem("status"));
-    if (getLocalData && getLocalData.userName === "") {
-      dialog.current.open();
-    }
-  }, []);
 
   useEffect(() => {
     const loaded = () => {
@@ -49,21 +40,6 @@ const Start = () => {
         { scale: 0.5, opacity: 0, x: -50 },
         { scale: 1, opacity: 1, ease: "back.out", delay: 0.8, x: 0 }
       );
-
-      gsap.fromTo(
-        ".btn-gsap",
-        {
-          x: -50,
-          opacity: 0,
-        },
-        {
-          x: 0,
-          opacity: 1,
-          stagger: 0.2,
-          ease: "back.out",
-          delay: 0.9,
-        }
-      );
     };
 
     if (document.readyState === "complete") {
@@ -86,19 +62,8 @@ const Start = () => {
   };
 
   //-----------------------------------------------------------
-
-  const handleUserNameBtn = () => {
-    dialog.current.open();
-  };
-
-  const handleScoreList = () => {
-    leaderboard.current.open();
-  };
-
-  //-----------------------------------------------------------
   return (
     <>
-      <UserName ref={dialog} />
       <Leaderboard ref={leaderboard} />
       <section className={classes["start-page"]}>
         <div onClick={handleStart} className={classes["btn-container"]}>
@@ -112,37 +77,13 @@ const Start = () => {
             id="snitch"
           />
         </div>
-        <div className={classes["function-btns-container"]}>
-          <div className={`${classes["function-btn"]} btn-gsap`}>
-            <button
-              className={classes["chose-username-btn"]}
-              onClick={handleScoreList}
-            >
-              Ranglista
-            </button>
-            <img
-              src={imgWand}
-              className={`${classes["magic-wand-img"]}`}
-              alt="magic wand"
-            />
-          </div>
-          <div className={`${classes["function-btn"]} btn-gsap`}>
-            <button
-              className={classes["chose-username-btn"]}
-              onClick={handleUserNameBtn}
-            >
-              Új nevet választok
-            </button>
-            <img
-              src={imgWand}
-              className={`${classes["magic-wand-img"]}`}
-              alt="magic wand"
-            />
-          </div>
-        </div>
         <div className={classes["welcome-text"]}>
-          {userName && <p>Üdvözöllek {userName}!</p>}
-          <p>Induljon a játék!</p>
+          <h2>Üdv a varázsvilágban!</h2>
+          <p>Tedd próbára tudásod a Harry Potter világáról!</p>
+          <p>
+            Ha jól válaszolsz, jutalmul QR-kód vár rád! Olvasd be, és máris
+            jöhet a következő kérdés!
+          </p>
         </div>
       </section>
     </>

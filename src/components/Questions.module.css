@@ -134,76 +134,7 @@
   border-radius: var(--border-radius-s);
 }
 
-/***************************************************
-diploma page **************************************/
 
-.diploma-section-bg {
-  width: 100%;
-  height: 100vmax;
-  padding: 2em 0.5em;
-  background: url("../assets/pop_up_bg-min.png");
-  background-size: cover;
-  background-repeat: repeat;
-}
-
-.diploma-container {
-  position: relative;
-}
-
-.diploma-text-container {
-  font-family: var(--font-title);
-  font-weight: 400;
-  width: 100%;
-  padding: 0 1em;
-  position: absolute;
-  top: 25%;
-}
-
-.diploma-text {
-  font-size: var(--font-size-m);
-  margin-bottom: 1em;
-}
-.diploma-name,
-.diploma-container p,
-.time {
-  font-size: var(--font-size-s);
-}
-
-.diploma-name + p {
-  font-size: 0.8rem;
-  margin: 0.5em 0em 0.6em 0em;
-}
-
-.diploma-img {
-  width: 100%;
-}
-
-.diploma-name {
-  position: relative;
-  font-weight: bold;
-}
-
-.diploma-name::after {
-  content: "";
-  display: block;
-  position: absolute;
-  width: 300px;
-  height: 1px;
-  left: calc(50% - 150px);
-  background-color: black;
-  margin-top: 0.2em;
-}
-
-.link-paragraph {
-  font-size: var(--font-size-m);
-  margin-top: 1em;
-}
-
-.download-link {
-  padding: 0.4em 0.6em;
-  color: var(--color-orage-100);
-  filter: drop-shadow(0px 0px 2px black);
-}
 
 /* timer */
 /***********************************/

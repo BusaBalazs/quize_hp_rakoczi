@@ -5,10 +5,6 @@ import gsap from "gsap";
 import { useCtx } from "../context/context";
 
 //-----------------------------------------------------------------
-import downloadjs from "downloadjs";
-import html2canvas from "html2canvas";
-
-//-----------------------------------------------------------------
 import QuestionItem from "./QuestionItem";
 import Modal from "./Modal";
 import Process from "./Process";
@@ -61,7 +57,6 @@ const Questions = () => {
   const [questionNum, setQuestionNum] = useState(0);
   const [feedback, setFeedback] = useState(ANSWER_FEEDBACK);
   const [questionId, setQuestionId] = useState([]);
-  const [diplomaData, setDiplomaData] = useState();
 
   const btns = useRef([]);
   const questionRef = useRef();
@@ -70,11 +65,11 @@ const Questions = () => {
   //---------------------------------------------------------------
 
   //--------------------------------------------------------------
- 
+
   useEffect(() => {
     const getStatus = getLocaldata("status");
     let getCounter = getStatus.questionCounter;
-    let gameEnd = getStatus.gameEnd
+    let gameEnd = getStatus.gameEnd;
     // when the page loded or reloaded this useEffect set the actual question number, if the game just has begun set the first question
     if (getCounter === 0) {
       setQuestionNum(0);
@@ -83,18 +78,12 @@ const Questions = () => {
     }
 
     //listen every game turn to the last question and invoke the onTurn function in context.jsx
-    
+
     if (gameEnd && getCounter + 1 === question.length) {
       onTurn();
     }
 
     setQuestionId(getStatus.questionId);
-
-    // set the time for diploma data
-    setDiplomaData({
-      userName: getStatus.userName,
-      time: getStatus.time,
-    });
   }, []);
 
   //--------------------------------------------------------------
@@ -174,15 +163,11 @@ const Questions = () => {
 
         //listen every game turn to the last question and invoke the onTurn function in context.jsx
         if (getCounter === question.length) {
-          //dialog.current.open();
-          setDiplomaData({
-            userName: getStatus.userName,
-            time: getStatus.time,
-          });
-          onTurn();
           setQuestionNum(getCounter - 1);
           getCounter--;
           setLocalData("status", { ...getStatus, questionCounter: getCounter });
+          onTurn();
+          navigate("/diploma");
           return;
         }
         setQuestionNum(getCounter);
@@ -208,15 +193,11 @@ const Questions = () => {
 
       //listen every game turn to the last question and invoke the onTurn function in context.jsx
       if (getCounter === question.length) {
-        //dialog.current.open();
-        setDiplomaData({
-          userName: getStatus.userName,
-          time: getStatus.time,
-        });
         setQuestionNum(getCounter - 1);
         getCounter--;
         setLocalData("status", { ...getStatus, questionCounter: getCounter });
         onTurn();
+        navigate("/diploma");
         return;
       }
 
@@ -227,39 +208,6 @@ const Questions = () => {
   };
 
   //--------------------------------------------------------------
-  const handleRestart = () => {
-    restart();
-    navigate("/");
-  };
-
-  //--------------------------------------------------------------
-  // downnload diploma
-  const handleCapture = async () => {
-    const diplomaContainer = document.querySelector("#diploma");
-
-    const canvas = await html2canvas(diplomaContainer, {
-      backgroundColor: null,
-    });
-
-    const dataURL = canvas.toDataURL("image/png");
-    downloadjs(dataURL, "potter.png", "image/png");
-  };
-
-  const diplomaTime = diplomaData && {
-    hour:
-      diplomaData.time.hour < 10
-        ? `0${diplomaData.time.hour}`
-        : diplomaData.time.hour,
-    min:
-      diplomaData.time.min < 10
-        ? `0${diplomaData.time.min}`
-        : diplomaData.time.min,
-    sec:
-      diplomaData.time.sec < 10
-        ? `0${diplomaData.time.sec}`
-        : diplomaData.time.sec,
-  };
-  //--------------------------------------------------------------
   return (
     <>
       <Modal
@@ -269,113 +217,51 @@ const Questions = () => {
         modalText={feedback}
         actualQuestionNum={questionNum}
       />
-
-      {!isEnd ? (
-        <section
-          className={`${classes["container"]} ${classes[`bg-${questionNum}`]}`}
-        >
-          <div>
-            <Process
-              numOfQuestion={questionNum}
-              numOfAllQuestion={question.length}
-            />
-          </div>
-          <div className={classes["question-section"]}>
-            <div
-              ref={questionRef}
-              id="question-gsap"
-              className={classes["question-container"]}
-            >
-              <img
-                src={nimbusImg}
-                alt="nimbusz 2000"
-                className={classes["nimbus-img"]}
-              />
-              <div className={classes["question"]}>
-                <h2>{question[questionNum].question}</h2>
-                <code>{question[questionNum].operation}</code>
-              </div>
-            </div>
-            <ul className={classes.list}>
-              {question[questionNum].answers.map((item, i) => (
-                <QuestionItem
-                  key={item.answer}
-                  CheckAnswer={(e, index = i) => isOk(e, index, item.right)}
-                  isDisabled={!answerIsTrue ? true : false}
-                  ref={(el) => (btns.current[i] = el)}
-                  className="answer-gsap"
-                >
-                  {item.answer}
-                </QuestionItem>
-              ))}
-            </ul>
-            <Timer className={classes["timer-display"]} isEnd={isEnd} />
-          </div>
-
-          <div className={classes.test}>
-            <button onClick={handleTest}>{questionId[questionNum]}</button>
-          </div>
-        </section>
-      ) : (
-        <section className={classes["diploma-section-bg"]}>
-          <div className="header-contaier">
-            <h2>gratulálunk</h2>
-            <img src={imgWand} className="magic-wand-img" alt="magic wand" />
-          </div>
-          <p className={classes["diploma-text"]}>
-            Büszkén veheted át a varázsló okleveled:
-          </p>
-          <div id="diploma" className={classes["diploma-container"]}>
-            <img
-              className={classes["diploma-img"]}
-              src={imgDiploma}
-              alt="diploma of success of game play"
-            />
-            <div className={classes["diploma-text-container"]}>
-              <p
-                className={classes["diploma-name"]}
-                style={{ fontFamily: '"Cinzel Decorative", serif' }} //use inline style because of HTML2canvas
-              >
-                {diplomaData && diplomaData.userName}
-              </p>
-              <p style={{ fontFamily: '"Cinzel Decorative", serif' }}></p>
-              <p
-                style={{
-                  fontFamily: '"Cinzel Decorative", serif',
-                  fontWeight: "700",
-                  textWrap: "balance",
-                  marginTop: "1.5em",
-                }}
-              >
-                <span
-                  className={classes["time"]}
-                  style={{
-                    fontFamily: '"Cinzel Decorative", serif',
-                    fontWeight: "700",
-                  }}
-                >
-                  {diplomaData &&
-                    `${diplomaTime.hour}:${diplomaTime.min}:${diplomaTime.sec}`}
-                </span>{" "}
-                idő alatt teljesítetted a feladatokat
-              </p>
-            </div>
-          </div>
-          <p className={classes["link-paragraph"]}>
-            A Diplomát letöltheted:{" "}
-            <span className={classes["download-link"]} onClick={handleCapture}>
-              INNEN!
-            </span>
-          </p>
-
-          <button
-            onClick={handleRestart}
-            className={`${classes["leader-board-btn"]} btn`}
+      <section
+        className={`${classes["container"]} ${classes[`bg-${questionNum}`]}`}
+      >
+        <div>
+          <Process
+            numOfQuestion={questionNum}
+            numOfAllQuestion={question.length}
+          />
+        </div>
+        <div className={classes["question-section"]}>
+          <div
+            ref={questionRef}
+            id="question-gsap"
+            className={classes["question-container"]}
           >
-            ok
-          </button>
-        </section>
-      )}
+            <img
+              src={nimbusImg}
+              alt="nimbusz 2000"
+              className={classes["nimbus-img"]}
+            />
+            <div className={classes["question"]}>
+              <h2>{question[questionNum].question}</h2>
+              <code>{question[questionNum].operation}</code>
+            </div>
+          </div>
+          <ul className={classes.list}>
+            {question[questionNum].answers.map((item, i) => (
+              <QuestionItem
+                key={item.answer}
+                CheckAnswer={(e, index = i) => isOk(e, index, item.right)}
+                isDisabled={!answerIsTrue ? true : false}
+                ref={(el) => (btns.current[i] = el)}
+                className="answer-gsap"
+              >
+                {item.answer}
+              </QuestionItem>
+            ))}
+          </ul>
+          <Timer className={classes["timer-display"]} isEnd={isEnd} />
+        </div>
+
+        <div className={classes.test}>
+          <button onClick={handleTest}>{questionId[questionNum]}</button>
+        </div>
+      </section>
     </>
   );
 };

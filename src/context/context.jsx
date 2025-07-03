@@ -70,6 +70,7 @@ export function CtxProvider(props) {
   const [finalTime, setFinalTime] = useState();
   const [isRestart, setIsRestart] = useState(false);
   const [userName, setUserName] = useState();
+  const [diplomaData, setDiplomaData] = useState();
 
   //-------------------------------------------------------------
   //display correct name on start page if the user change the name
@@ -86,6 +87,12 @@ export function CtxProvider(props) {
       setLocalData("status", dataInit);
     }
 
+    if (gameStatus) {
+      // set the time for diploma data
+      setDiplomaData({
+        time: gameStatus.time,
+      });
+    }
 
     gameStatus && setIsStart(gameStatus.isStart);
   }, []);
@@ -112,7 +119,6 @@ export function CtxProvider(props) {
   //-------------------------------------------------------------
   const handleTurn = async () => {
     setIsEnd(true);
-console.log("dsfsdfsdfsdf")
     // Always get the latest gameStatus from localStorage
     let gameStatus = getLocaldata("status");
 
@@ -122,7 +128,12 @@ console.log("dsfsdfsdfsdf")
     // Update gameEnd to true and save to localStorage
     gameStatus.gameEnd = true;
     setLocalData("status", gameStatus);
-/*
+
+    // set the time for diploma data
+    setDiplomaData({
+      time: gameStatus.time,
+    });
+    /*
     //-----------------------------------------
     // set the user name and time to firebase database
     // fetch the actual user data
@@ -213,6 +224,7 @@ console.log("dsfsdfsdfsdf")
     isRestart,
     userName,
     welcomeUser,
+    diplomaData,
   };
   return <Ctx.Provider value={value}>{props.children}</Ctx.Provider>;
 }

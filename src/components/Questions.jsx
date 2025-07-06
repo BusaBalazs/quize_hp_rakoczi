@@ -121,20 +121,25 @@ const Questions = () => {
   // check the selected answer and add feedback if it is wrong
   const isOk = (e, index, answer) => {
     if (answer) {
+      // if the answer is true, play the sound and open the dialog
+      if (questionNum === 6) {
+        new Audio(mandrakeSound).play();
+
+        // set the btns disabled while the audio is playing
+        setAnswerIsTrue(false);
+        setTimeout(() => {
+          dialog.current.open();
+          setAnswerIsTrue(true);
+        }, 4500);
+        return;
+      }
+
       dialog.current.open();
       setAnswerIsTrue(true);
     } else {
       setAnswerIsTrue(false);
       //setBtn(e.target);
-      if (questionNum === 6) {
-        new Audio(mandrakeSound).play();
-        btns.current[index].style.backgroundColor = "rgba(194, 0, 0, 0.7)";
-        setTimeout(() => {
-          btns.current[index].style.backgroundColor = "";
-          setAnswerIsTrue(true);
-        }, 4500);
-        return;
-      }
+
       btns.current[index].style.backgroundColor = "rgba(194, 0, 0, 0.7)";
       setTimeout(() => {
         btns.current[index].style.backgroundColor = "";

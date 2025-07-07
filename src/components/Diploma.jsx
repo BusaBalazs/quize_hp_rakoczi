@@ -28,10 +28,11 @@ const Diploma = () => {
 
     const canvas = await html2canvas(diplomaContainer, {
       backgroundColor: null,
+
     });
 
     const dataURL = canvas.toDataURL("image/png");
-    downloadjs(dataURL, "potter.png", "image/png");
+    downloadjs(dataURL, "magic_diploma.png", "image/png");
   };
 
   const diplomaTime = diplomaData && {

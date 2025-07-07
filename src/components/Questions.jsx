@@ -254,7 +254,7 @@ const Questions = () => {
                 CheckAnswer={(e, index = i) => isOk(e, index, item.right)}
                 isDisabled={!answerIsTrue ? true : false}
                 ref={(el) => (btns.current[i] = el)}
-                className="answer-gsap"
+                className="answer-gsap question-item"
               >
                 {item.answer}
               </QuestionItem>

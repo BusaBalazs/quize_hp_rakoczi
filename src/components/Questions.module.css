@@ -132,6 +132,7 @@
   border-left: solid 2px var(--color-orage-100);
   border-right: solid 2px var(--color-orage-100);
   border-radius: var(--border-radius-s);
+  color: black;
 }
 
 

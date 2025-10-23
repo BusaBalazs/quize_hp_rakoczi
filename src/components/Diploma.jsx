@@ -99,13 +99,15 @@ const Diploma = () => {
         <span className={classes["download-link"]} onClick={handleCapture}>
           INNEN!
         </span>
+        <br />
+        Kérlek gyere vissza a kiinduló ponthoz, ha szeretnél még egy kicsit játszani.
       </p>
 
       <button
         onClick={handleRestart}
         className={`${classes["leader-board-btn"]} btn`}
       >
-        ok
+        Újra játszom
       </button>
     </section>
   );

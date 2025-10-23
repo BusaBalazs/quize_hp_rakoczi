@@ -187,7 +187,6 @@ const Questions = () => {
   };
 
   //--------------------------------------------------------------
-
   const handleTest = () => {
     try {
       const getStatus = getLocaldata("status");
@@ -265,7 +264,7 @@ const Questions = () => {
 
         <div className={classes.test}>
           <button onClick={handleTest}>{questionId[questionNum]}</button>
-        </div>
+        </div> 
       </section>
     </>
   );

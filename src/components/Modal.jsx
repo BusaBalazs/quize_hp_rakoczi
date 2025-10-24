@@ -47,7 +47,7 @@ const Modal = forwardRef(({ getScanId, modalText, actualQuestionNum }, ref) => {
       setImgLoaded(false);
     };
   }, []);
-  console.log(imgLoaded);
+
   //-----------------------------------------------------------------
   useImperativeHandle(ref, () => {
     return {
@@ -118,7 +118,9 @@ const Modal = forwardRef(({ getScanId, modalText, actualQuestionNum }, ref) => {
             </div>
             <div className={classes["map-img-container"]}>
               {imgLoaded === false ? (
-                <p style={{ color: "white" }}>Loading...</p>
+                <p style={{ color: "white", textAlign: "center" }}>
+                  Térkép betöltése...
+                </p>
               ) : (
                 <img
                   onLoad={() => setImgLoaded(true)}

@@ -262,9 +262,9 @@ const Questions = () => {
           <Timer className={classes["timer-display"]} isEnd={isEnd} />
         </div>
 
-        <div className={classes.test}>
+        {/* <div className={classes.test}>
           <button onClick={handleTest}>{questionId[questionNum]}</button>
-        </div> 
+        </div>  */}
       </section>
     </>
   );

@@ -1,11 +1,11 @@
 export const ANSWER_FEEDBACK = {
   qr: true,
   title: "helyes a válasz!",
-  paragraphe: "Keresd meg a következő jelet!",
+  paragraphe: "Menj a zöld keresztel jelölt helyre!",
 };
 
 export const QR_FEEDBACK = {
   qr: false,
   title: "rossz kódot olvastál be!",
-  paragraphe: "Keresd meg megfelelő jelet!",
+  paragraphe: "Menj a zöld keresztel jelölt helyre!",
 };

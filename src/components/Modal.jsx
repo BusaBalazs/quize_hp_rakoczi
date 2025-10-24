@@ -19,7 +19,6 @@ import { useCtx } from "../context/context.jsx";
 
 import { imgWand, maps } from "../assets/index.js";
 
-
 //-----------------------------------------------------------------
 //-----------------------------------------------------------------
 
@@ -27,7 +26,28 @@ const Modal = forwardRef(({ getScanId, modalText, actualQuestionNum }, ref) => {
   const [id, setId] = useState();
   const dialog = useRef();
   const [isScan, setIsScan] = useState(false);
+  const [imgLoaded, setImgLoaded] = useState(false);
   const { isEnd, finalTime, restart } = useCtx();
+  //-----------------------------------------------------------------
+  // image loading
+  useEffect(() => {
+    // handle image load time
+    const loaded = () => {
+      setImgLoaded(true);
+    };
+
+    if (document.readyState === "complete") {
+      loaded();
+    } else {
+      window.addEventListener("load", loaded);
+    }
+
+    return () => {
+      window.removeEventListener("load", loaded);
+      setImgLoaded(false);
+    };
+  }, []);
+  console.log(imgLoaded);
   //-----------------------------------------------------------------
   useImperativeHandle(ref, () => {
     return {
@@ -97,7 +117,16 @@ const Modal = forwardRef(({ getScanId, modalText, actualQuestionNum }, ref) => {
               </p>
             </div>
             <div className={classes["map-img-container"]}>
-              <img src={id && maps[id[actualQuestionNum]]} alt="map" className={classes["map-img"]} />
+              {imgLoaded === false ? (
+                <p style={{ color: "white" }}>Loading...</p>
+              ) : (
+                <img
+                  onLoad={() => setImgLoaded(true)}
+                  src={id && maps[id[actualQuestionNum]]}
+                  alt="map"
+                  className={classes["map-img"]}
+                />
+              )}
             </div>
             <div>
               <button onClick={handlScan} className="btn-big">
